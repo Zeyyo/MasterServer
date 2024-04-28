@@ -1,0 +1,5 @@
+#pragma once
+
+#define SOCKET_OPERATION_SUCCESS 0
+#define SOCKET_OPERATION_ERROR -2
+#define CONNECTION_CLOSED -3

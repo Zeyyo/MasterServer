@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{53bf77e6-eed2-45ac-a8ca-e815e43dd737}</ProjectGuid>
+    <RootNamespace>NetworkLib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)/NetworkLib;$(SolutionDir)NetworkLib\Source;$(SolutionDir)NetworkLib;</AdditionalIncludeDirectories>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)/NetworkLib;$(SolutionDir)\NetworkLib\Source;$(SolutionDir)\NetworkLib\;</AdditionalIncludeDirectories>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)/NetworkLib;$(SolutionDir)NetworkLib\Source;$(SolutionDir)NetworkLib;$(SolutionDir)\NetworkLib</AdditionalIncludeDirectories>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)/NetworkLib;$(SolutionDir)\NetworkLib\Source;$(SolutionDir)\NetworkLib\;</AdditionalIncludeDirectories>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="EventHandleing.h" />
+    <ClInclude Include="Source\Helpers\OperationHelper\OperationHelper.h" />
+    <ClInclude Include="Source\Events\Logger\Logger.h" />
+    <ClInclude Include="Source\Events\EventHandleing\EventHandling.h" />
+    <ClInclude Include="Source\Events\Exceptions\ConnectionManagerExceptions.h" />
+    <ClInclude Include="Source\Events\ErrorHandling\ErrorHandling.h" />
+    <ClInclude Include="Source\Events\Exceptions\FileTransferHandlerExceptions.h" />
+    <ClInclude Include="Source\Events\Exceptions\ServerCoreExceptions.h" />
+    <ClInclude Include="Source\Events\Exceptions\SocketOperationExceptions.h" />
+    <ClInclude Include="Source\Events\Exceptions\WorkerPoolExceptions.h" />
+    <ClInclude Include="Source\Networking\Server\ConnectionManager\config.h" />
+    <ClInclude Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\config.h" />
+    <ClInclude Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\FileTransfer\FileTransferOperations.h" />
+    <ClInclude Include="Source\Networking\Server\Core\config.h" />
+    <ClInclude Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\config.h" />
+    <ClInclude Include="Source\Networking\Types\FileTypes.h" />
+    <ClInclude Include="Source\Networking\Utilities\FileOperations\FileOperations.h" />
+    <ClInclude Include="Source\Networking\Utilities\SocketEvents.h" />
+    <ClInclude Include="Source\Networking\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.h" />
+    <ClInclude Include="Source\Networking\Server\ConnectionManager\ConnectionManager.h" />
+    <ClInclude Include="Source\framework.h" />
+    <ClInclude Include="Source\Networking\Utilities\SocketOperations\SocketOperations.h" />
+    <ClInclude Include="Source\pch.h" />
+    <ClInclude Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\FTP.h" />
+    <ClInclude Include="Source\Networking\Server\config.h" />
+    <ClInclude Include="Source\Networking\Server\Core\Core.h" />
+    <ClInclude Include="Source\Blankets\rot19\rot19.h" />
+    <ClInclude Include="Source\Networking\Types\Types.h" />
+    <ClInclude Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\ThreadPool.h" />
+    <ClInclude Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Helpers\OperationHelper\OperationHelper.cpp" />
+    <ClCompile Include="Source\Events\Logger\OstreamLogger.h" />
+    <ClCompile Include="Source\Events\Exceptions\FileOperationExceptions.h" />
+    <ClCompile Include="Source\Events\Exceptions\NetworkOperationExceptions.h" />
+    <ClCompile Include="Source\Events\Exceptions\SessionHandlingExceptions.h" />
+    <ClCompile Include="Source\Events\EventHandleing\EventHandling.cpp" />
+    <ClCompile Include="Source\Events\ErrorHandling\ErrorHandling.cpp" />
+    <ClCompile Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\FileTransfer\FileTransferOperations.cpp" />
+    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.cpp" />
+    <ClCompile Include="Source\Networking\Server\ConnectionManager\ConnectionManager.cpp" />
+    <ClCompile Include="NetworkLib.cpp" />
+    <ClCompile Include="Source\Networking\Utilities\FileOperations\FileOperations.cpp" />
+    <ClCompile Include="Source\Networking\Utilities\SocketOperations\SocketOperations.cpp" />
+    <ClCompile Include="Source\Networking\Utilities\SocketUtils.h" />
+    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\Session\Session.cpp" />
+    <ClCompile Include="Source\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\FTP.cpp" />
+    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\Session\Session.h" />
+    <ClCompile Include="Source\Networking\Server\Core\Core.cpp" />
+    <ClCompile Include="Source\Blankets\rot19\rot19.cpp" />
+    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\ThreadPool.cpp" />
+    <ClCompile Include="Source\Networking\Utilities\GetIP.cpp" />
+    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="header_template.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
