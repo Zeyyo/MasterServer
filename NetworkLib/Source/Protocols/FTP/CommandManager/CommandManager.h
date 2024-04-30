@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "ICommand.h"
+#include "Commands.h"
 
 class CommandManager
 {

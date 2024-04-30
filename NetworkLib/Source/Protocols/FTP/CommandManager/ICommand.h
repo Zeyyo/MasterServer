@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-
+#include "Types/FileTypes.h"
 
 class ICommand {
 public:
