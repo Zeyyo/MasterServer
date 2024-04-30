@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
-#include "Networking/Server/ConnectionManager/SessionHandleing/WorkerPool/ThreadPool.h"
-#include "Networking/Types/Types.h"
+#include "Server/ConnectionManager/SessionHandleing/WorkerPool/ThreadPool.h"
+#include "Types/Types.h"
 
 namespace NetworkLibrary
 {

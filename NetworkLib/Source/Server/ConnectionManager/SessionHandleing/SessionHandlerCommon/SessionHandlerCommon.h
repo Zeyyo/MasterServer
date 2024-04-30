@@ -1,11 +1,11 @@
 #pragma once
 #include "pch.h"
-#include "Networking/Types/Types.h"
+#include "Types/Types.h"
 #include "Events/Logger/OstreamLogger.h"
-#include "Networking/Server/ConnectionManager/SessionHandleing/WorkerPool/ThreadPool.h"
-#include "Networking/Server/ConnectionManager/SessionHandleing/Session/Session.h"
+#include "Server/ConnectionManager/SessionHandleing/WorkerPool/ThreadPool.h"
+#include "Server/ConnectionManager/SessionHandleing/Session/Session.h"
 
-#include "Networking/Utilities/SocketOperations/SocketOperations.h"
+#include "Utilities/SocketOperations/SocketOperations.h"
 
 using NetworkLibrary::ModuleType;
 using NetworkLibrary::PORT;

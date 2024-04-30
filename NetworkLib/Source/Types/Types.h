@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-#include "Networking/Server/config.h"
+#include "Server/config.h"
 
 namespace NetworkLibrary
 {

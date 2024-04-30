@@ -2,7 +2,7 @@
 #include "pch.h"
 #include <string>
 
-#include "Networking/Types/Types.h"
+#include "Types/Types.h"
 #include "Events/Logger/OstreamLogger.h"
 #include "Helpers/OperationHelper/OperationHelper.h"
 #include "Events/Exceptions/SocketOperationExceptions.h"

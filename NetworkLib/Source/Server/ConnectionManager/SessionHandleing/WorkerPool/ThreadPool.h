@@ -3,9 +3,9 @@
 #include "config.h"
 
 #include "Worker/Worker.h"
-#include "Networking/Types/Types.h"
+#include "Types/Types.h"
 #include "Events/Logger/OstreamLogger.h"
-#include "Networking/Server/ConnectionManager/SessionHandleing/Session/Session.h"
+#include "Server/ConnectionManager/SessionHandleing/Session/Session.h"
 
 
 namespace NetworkLibrary

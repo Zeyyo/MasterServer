@@ -24,58 +24,58 @@
     <ClInclude Include="Source\Blankets\rot19\rot19.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Server\Core\Core.h">
+    <ClInclude Include="Source\Server\Core\Core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Types\Types.h">
+    <ClInclude Include="Source\Types\Types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\ThreadPool.h">
+    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\ThreadPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\ConnectionManager.h">
+    <ClInclude Include="Source\Server\ConnectionManager\ConnectionManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.h">
+    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Events\ErrorHandling\ErrorHandling.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\FTP.h">
+    <ClInclude Include="Source\Protocols\FTP\FTP.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Server\config.h">
+    <ClInclude Include="Source\Server\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.h">
+    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Utilities\SocketEvents.h">
+    <ClInclude Include="Source\Utilities\SocketEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\config.h">
+    <ClInclude Include="Source\Server\ConnectionManager\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Server\Core\config.h">
+    <ClInclude Include="Source\Server\Core\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\config.h">
+    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\config.h">
+    <ClInclude Include="Source\Protocols\FTP\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Utilities\SocketOperations\SocketOperations.h">
+    <ClInclude Include="Source\Utilities\SocketOperations\SocketOperations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\FileTransfer\FileTransferOperations.h">
+    <ClInclude Include="Source\Protocols\FTP\FileTransfer\FileTransferOperations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Types\FileTypes.h">
+    <ClInclude Include="Source\Types\FileTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Networking\Utilities\FileOperations\FileOperations.h">
+    <ClInclude Include="Source\Utilities\FileOperations\FileOperations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EventHandleing.h">
@@ -105,6 +105,15 @@
     <ClInclude Include="Source\Helpers\OperationHelper\OperationHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Protocols\FTP\CommandManager\CommandManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Protocols\FTP\CommandManager\CommandAssociateFunctions\CommandAssociateFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Protocols\FTP\CommandManager\Commands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NetworkLib.cpp">
@@ -116,46 +125,46 @@
     <ClCompile Include="Source\Blankets\rot19\rot19.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Server\Core\Core.cpp">
+    <ClCompile Include="Source\Server\Core\Core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\ThreadPool.cpp">
+    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\ThreadPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\Session\Session.h">
+    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\Session\Session.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\ConnectionManager.cpp">
+    <ClCompile Include="Source\Server\ConnectionManager\ConnectionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.cpp">
+    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Events\ErrorHandling\ErrorHandling.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\FTP.cpp">
+    <ClCompile Include="Source\Protocols\FTP\FTP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Utilities\GetIP.cpp">
+    <ClCompile Include="Source\Utilities\GetIP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.cpp">
+    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\Session\Session.cpp">
+    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\Session\Session.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Utilities\SocketUtils.h">
+    <ClCompile Include="Source\Utilities\SocketUtils.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Utilities\SocketOperations\SocketOperations.cpp">
+    <ClCompile Include="Source\Utilities\SocketOperations\SocketOperations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\FileTransfer\FileTransferOperations.cpp">
+    <ClCompile Include="Source\Protocols\FTP\FileTransfer\FileTransferOperations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Utilities\FileOperations\FileOperations.cpp">
+    <ClCompile Include="Source\Utilities\FileOperations\FileOperations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Events\EventHandleing\EventHandling.cpp">
@@ -174,6 +183,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Helpers\OperationHelper\OperationHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Protocols\FTP\CommandManager\CommandManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Protocols\FTP\CommandManager\ICommand.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Protocols\FTP\CommandManager\CommandAssociateFunctions\CommandAssociateFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

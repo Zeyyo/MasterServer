@@ -5,16 +5,11 @@
 #include <map>
 #include <sstream>
 
-#include "Networking/Types/FileTypes.h"
-#include "FileTransfer/FileTransferOperations.h"
-
+#include "Types/FileTypes.h"
 #include "Events/Logger/OstreamLogger.h"
-#include "Networking/Utilities/SocketEvents.h"
-#include "Networking/Utilities/SocketUtils.h"
-#include "Networking/Server/ConnectionManager/SessionHandleing/Session/Session.h"
-
-#include "Networking/Utilities/SocketUtils.h"
-#include "Networking/Utilities/SocketOperations/SocketOperations.h"
+#include "Utilities/SocketOperations/SocketOperations.h"
+#include "CommandManager/CommandManager.h"
+#include "Server/ConnectionManager/SessionHandleing/Session/Session.h"
 
 extern void ftpMod(NetworkLibrary::Session* session);
 
@@ -43,8 +38,6 @@ namespace ProtocolHandlers::FTP
 
 		//void DoSetupCallHandleing();
 		//void DoFileRequestHandleing();
-		void DoFileAcquire(FileData& fileData);
-		void DoFileDispatch(SOCKET socket, std::string szFileName);
 
 	private:
 		NetworkLibrary::Session* pSession_ = NULL;

@@ -3,9 +3,9 @@
 #include "pch.h"
 #include "config.h"
 
-#include "Networking/Types/Types.h"
+#include "Types/Types.h"
 #include "Events/Logger/OstreamLogger.h"
-#include "RequestHendleing/ProtocolHandlerModules/FTP/FTP.h"
+#include "Protocols/FTP/FTP.h"
 #include "SessionHandleing/WorkerPool/ThreadPool.h"
 #include "SessionHandleing/SessionHandlerCommon/SessionHandlerCommon.h";
 

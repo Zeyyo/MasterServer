@@ -151,6 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Protocols\FTP\CommandManager\Commands.h" />
+    <ClInclude Include="Source\Protocols\FTP\CommandManager\CommandAssociateFunctions\CommandAssociateFunctions.h" />
+    <ClInclude Include="Source\Protocols\FTP\CommandManager\CommandManager.h" />
     <ClInclude Include="EventHandleing.h" />
     <ClInclude Include="Source\Helpers\OperationHelper\OperationHelper.h" />
     <ClInclude Include="Source\Events\Logger\Logger.h" />
@@ -161,28 +164,30 @@
     <ClInclude Include="Source\Events\Exceptions\ServerCoreExceptions.h" />
     <ClInclude Include="Source\Events\Exceptions\SocketOperationExceptions.h" />
     <ClInclude Include="Source\Events\Exceptions\WorkerPoolExceptions.h" />
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\config.h" />
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\config.h" />
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\FileTransfer\FileTransferOperations.h" />
-    <ClInclude Include="Source\Networking\Server\Core\config.h" />
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\config.h" />
-    <ClInclude Include="Source\Networking\Types\FileTypes.h" />
-    <ClInclude Include="Source\Networking\Utilities\FileOperations\FileOperations.h" />
-    <ClInclude Include="Source\Networking\Utilities\SocketEvents.h" />
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.h" />
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\ConnectionManager.h" />
+    <ClInclude Include="Source\Server\ConnectionManager\config.h" />
+    <ClInclude Include="Source\Protocols\FTP\config.h" />
+    <ClInclude Include="Source\Protocols\FTP\FileTransfer\FileTransferOperations.h" />
+    <ClInclude Include="Source\Server\Core\config.h" />
+    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\config.h" />
+    <ClInclude Include="Source\Types\FileTypes.h" />
+    <ClInclude Include="Source\Utilities\FileOperations\FileOperations.h" />
+    <ClInclude Include="Source\Utilities\SocketEvents.h" />
+    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.h" />
+    <ClInclude Include="Source\Server\ConnectionManager\ConnectionManager.h" />
     <ClInclude Include="Source\framework.h" />
-    <ClInclude Include="Source\Networking\Utilities\SocketOperations\SocketOperations.h" />
+    <ClInclude Include="Source\Utilities\SocketOperations\SocketOperations.h" />
     <ClInclude Include="Source\pch.h" />
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\FTP.h" />
-    <ClInclude Include="Source\Networking\Server\config.h" />
-    <ClInclude Include="Source\Networking\Server\Core\Core.h" />
+    <ClInclude Include="Source\Protocols\FTP\FTP.h" />
+    <ClInclude Include="Source\Server\config.h" />
+    <ClInclude Include="Source\Server\Core\Core.h" />
     <ClInclude Include="Source\Blankets\rot19\rot19.h" />
-    <ClInclude Include="Source\Networking\Types\Types.h" />
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\ThreadPool.h" />
-    <ClInclude Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.h" />
+    <ClInclude Include="Source\Types\Types.h" />
+    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\ThreadPool.h" />
+    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Protocols\FTP\CommandManager\CommandAssociateFunctions\CommandAssociateFunctions.cpp" />
+    <ClCompile Include="Source\Protocols\FTP\CommandManager\CommandManager.cpp" />
     <ClCompile Include="Source\Helpers\OperationHelper\OperationHelper.cpp" />
     <ClCompile Include="Source\Events\Logger\OstreamLogger.h" />
     <ClCompile Include="Source\Events\Exceptions\FileOperationExceptions.h" />
@@ -190,14 +195,15 @@
     <ClCompile Include="Source\Events\Exceptions\SessionHandlingExceptions.h" />
     <ClCompile Include="Source\Events\EventHandleing\EventHandling.cpp" />
     <ClCompile Include="Source\Events\ErrorHandling\ErrorHandling.cpp" />
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\FileTransfer\FileTransferOperations.cpp" />
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.cpp" />
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\ConnectionManager.cpp" />
+    <ClCompile Include="Source\Protocols\FTP\CommandManager\ICommand.h" />
+    <ClCompile Include="Source\Protocols\FTP\FileTransfer\FileTransferOperations.cpp" />
+    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.cpp" />
+    <ClCompile Include="Source\Server\ConnectionManager\ConnectionManager.cpp" />
     <ClCompile Include="NetworkLib.cpp" />
-    <ClCompile Include="Source\Networking\Utilities\FileOperations\FileOperations.cpp" />
-    <ClCompile Include="Source\Networking\Utilities\SocketOperations\SocketOperations.cpp" />
-    <ClCompile Include="Source\Networking\Utilities\SocketUtils.h" />
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\Session\Session.cpp" />
+    <ClCompile Include="Source\Utilities\FileOperations\FileOperations.cpp" />
+    <ClCompile Include="Source\Utilities\SocketOperations\SocketOperations.cpp" />
+    <ClCompile Include="Source\Utilities\SocketUtils.h" />
+    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\Session\Session.cpp" />
     <ClCompile Include="Source\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -208,13 +214,13 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\RequestHendleing\ProtocolHandlerModules\FTP\FTP.cpp" />
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\Session\Session.h" />
-    <ClCompile Include="Source\Networking\Server\Core\Core.cpp" />
+    <ClCompile Include="Source\Protocols\FTP\FTP.cpp" />
+    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\Session\Session.h" />
+    <ClCompile Include="Source\Server\Core\Core.cpp" />
     <ClCompile Include="Source\Blankets\rot19\rot19.cpp" />
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\ThreadPool.cpp" />
-    <ClCompile Include="Source\Networking\Utilities\GetIP.cpp" />
-    <ClCompile Include="Source\Networking\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.cpp" />
+    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\ThreadPool.cpp" />
+    <ClCompile Include="Source\Utilities\GetIP.cpp" />
+    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="header_template.txt" />

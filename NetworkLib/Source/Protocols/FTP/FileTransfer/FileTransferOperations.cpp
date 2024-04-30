@@ -36,7 +36,7 @@ namespace FileTransferOperations
 		return true;
 	}
 
-	bool TransmitFile(SOCKET socket, std::string szFileName)
+	bool TransmitFile(SOCKET socket, std::string& szFileName)
 	{
 		FileData fileData;
 		try

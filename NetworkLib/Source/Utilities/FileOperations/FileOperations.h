@@ -6,7 +6,7 @@
 
 #include "Helpers/OperationHelper/OperationHelper.h"
 #include "Events/Logger/OstreamLogger.h"
-#include "Networking/Types/FileTypes.h"
+#include "Types/FileTypes.h"
 #include "Events/Exceptions/FileOperationExceptions.h"
 
 namespace Utilitis::FileOperations

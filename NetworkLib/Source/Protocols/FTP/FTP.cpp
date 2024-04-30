@@ -19,12 +19,17 @@ namespace ProtocolHandlers::FTP
 
 		DoProcessHeader(sInitRequestBuffer_, nInitRequestBufferLen_);
 	}
-
+	
 	void FileTransferHandler::DoProcessHeader(const char* pksHeaderBuffer, size_t nHeaderBufferSize)
 	{
 		std::istringstream ssHeader(pksHeaderBuffer);
-		std::string operation;
-		ssHeader >> operation;
+		std::string szCommand;
+		ssHeader >> szCommand;
+		
+		CommandManager().RunCommand(szCommand, [a, b](CommandManager::CommandIteratorT itCommand)
+			{
+				itCommand->second->RunCommandSync();
+			});
 
 		if (operation == "sc")
 		{
@@ -48,15 +53,5 @@ namespace ProtocolHandlers::FTP
 			FileData fileData(szFileName, 0, "");
 			DoFileDispatch(pSession_->socket_, szFileName);
 		}
-	}
-
-	void FileTransferHandler::DoFileAcquire(FileData &fileData)
-	{
-		bool bFileAcquireSuccess = FileTransferOperations::ReceiveFile(pSession_->socket_, fileData);
-	}
-
-	void FileTransferHandler::DoFileDispatch(SOCKET socket, std::string szFileName)
-	{
-		bool bFileDispatchSuccess = FileTransferOperations::TransmitFile(socket, szFileName);
 	}
 }
