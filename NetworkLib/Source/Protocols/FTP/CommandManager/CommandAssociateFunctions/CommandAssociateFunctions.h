@@ -5,8 +5,6 @@
 
 namespace Commands
 {
-	void DoFileAcquire(SOCKET socket, FileData& fileData);
-	void DoFileDispatch(SOCKET socket, std::string& szFileName);
+	void DoFileAcquire(const SOCKET socket, FileData& fileData);
+	void DoFileDispatch(const SOCKET socket, std::string& szFileName);
 }
-
-

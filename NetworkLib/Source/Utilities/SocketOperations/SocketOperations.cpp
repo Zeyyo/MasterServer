@@ -106,6 +106,7 @@ namespace Utilitis::SocketOperations
             if (dwError == WSAEWOULDBLOCK) NULL;
             throw Exceptions::SocketOperationExceptions::SendDataException(dwError);
         }
+        return 1;
     }
 
     void Send(SOCKET socket, const char* pkrawBuffer, size_t nOfBytesToSend, int flags)

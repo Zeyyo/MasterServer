@@ -26,16 +26,12 @@ namespace ProtocolHandlers::FTP
 		std::string szCommand;
 		ssHeader >> szCommand;
 		
-		CommandManager().RunCommand(szCommand, [a, b](CommandManager::CommandIteratorT itCommand)
-			{
-				itCommand->second->RunCommandSync();
-			});
-
-		if (operation == "sc")
+		
+		if (szCommand == "sc")
 		{
 			// TODO
 		}
-		if (operation == "fa")
+		if (szCommand == "fa")
 		{
 			std::string szFileName;
 			size_t nFileSize;
@@ -43,15 +39,23 @@ namespace ProtocolHandlers::FTP
 
 			ssHeader >> szFileName >> nFileSize >> szFileExtension;
 			FileData fileData(szFileName, nFileSize, szFileExtension);
-			DoFileAcquire(fileData);
+			SOCKET socket = pSession_->socket_;
+			CommandManager().RunCommand(szCommand, [&socket, &fileData](CommandManager::CommandIteratorT itCommand)
+				{
+					itCommand->second->RunCommandSync(socket, fileData);
+				});
 		}
-		if (operation == "fd")
+		if (szCommand == "fd")
 		{
 			std::string szFileName;
 			ssHeader >> szFileName;
 
 			FileData fileData(szFileName, 0, "");
-			DoFileDispatch(pSession_->socket_, szFileName);
+			SOCKET socket = pSession_->socket_;
+			CommandManager().RunCommand(szCommand, [&socket, &szFileName](CommandManager::CommandIteratorT itCommand)
+				{
+					itCommand->second->RunCommandSync(socket, szFileName);
+				});
 		}
 	}
 }

@@ -5,7 +5,7 @@
 
 class AcquireFile : public ICommand {
 public:
-    void RunCommandSync(SOCKET socket, FileData& fileData) override
+    void RunCommandSync(const SOCKET socket, FileData& fileData) override
     {
         Commands::DoFileAcquire(socket, fileData);
     }
@@ -13,7 +13,7 @@ public:
 
 class DispatchFile : public ICommand {
 public:
-    void RunCommandSync(SOCKET socket, std::string& szFileName) override
+    void RunCommandSync(const SOCKET socket, std::string& szFileName) override
     {
         Commands::DoFileDispatch(socket, szFileName);
     }
