@@ -5,12 +5,13 @@ std::thread NetworkLibrary::ThreadPool::spawn(ThreadStatusPipe* pipe) {
 	return std::thread([this, pipe] { this->InitializeWorker(pipe); });
 }
 
+
 void NetworkLibrary::ThreadPool::InitializeWorker(ThreadStatusPipe* pipe)
 {
 	for (;;)
 	{
-		std::unique_lock<std::mutex> lock(sessoinQueueMutex);
-		coThreadContinue.wait(lock, [this, pipe] { return bStop_ || pipe->bAwaitingTermination || !clintSessionQueue.empty(); });
+		std::unique_lock<std::mutex> sessionQueuelock(sessoinQueueMutex);
+		coThreadContinue.wait(sessionQueuelock, [this, pipe] { return bStop_ || pipe->bAwaitingTermination || !clintSessionQueue.empty(); });
 
 		if (pipe->bAwaitingTermination == true)
 		{
@@ -21,13 +22,13 @@ void NetworkLibrary::ThreadPool::InitializeWorker(ThreadStatusPipe* pipe)
 		if (bStop_ && clintSessionQueue.empty()) return;
 
 		pipe->bBusy = true;
-		Session* pSession = std::move(clintSessionQueue.front());
+		std::unique_ptr<Session> pSession = std::move(clintSessionQueue.front());
 		clintSessionQueue.pop();
-		lock.unlock();
+		sessionQueuelock.unlock();
 
-		pSession->fnmRequestTask(pSession);
-		pSession->CloseAndDestruct();
-		delete pSession;
+		SessionData sessionData = pSession->GetSessionData();
+		pSession->fnmRequestTask(sessionData);
+		pSession->Close();
 		pipe->bBusy = false;
 	}
 }

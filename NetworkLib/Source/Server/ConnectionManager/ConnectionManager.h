@@ -38,7 +38,6 @@ namespace NetworkLibrary
 
         void AddIndividualSessionHandler(int handlerFlags);
         void RemoveIndividualSessionHandler(int handlerFlags);
-
     private:
         void InitializeConnectionManager();
     };

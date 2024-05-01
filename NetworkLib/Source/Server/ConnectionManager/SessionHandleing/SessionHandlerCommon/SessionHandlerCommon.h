@@ -19,7 +19,14 @@ namespace NetworkLibrary
 class SessionHandler
 {
 public:
-	SessionHandler(UINT8 u8ModuleType, PORT port, int nBackLog, void(*fnRequestTask)(Session*)) : u8ModuleType_(u8ModuleType), fnRequestTask(fnRequestTask)
+	SessionHandler(
+		UINT8 u8ModuleType, 
+		PORT port,
+		int nBackLog, 
+		void(*fnRequestTask)(NetworkLibrary::SessionData&)) 
+		:
+		u8ModuleType_(u8ModuleType),
+		fnRequestTask(fnRequestTask)
 	{
 		try
 		{
@@ -38,7 +45,7 @@ public:
 		}
 	}
 
-	void(*fnRequestTask)(Session*) = NULL;
+	void(*fnRequestTask)(NetworkLibrary::SessionData&) = NULL;
 	DWORD InitializeSessionHandler();
 	void stop();
 	UINT8 GetModuleType() const;
@@ -47,7 +54,7 @@ private:
 	bool bStop_ = false;
 	SOCKET socket_ = NULL;
 	UINT8 u8ModuleType_;
-	DWORD AcceptNewConnection(Session* clientSession);
+	DWORD AcceptNewConnection(std::unique_ptr<Session>&& clientSession);
 	void InitializeConnectionHandler();
 	std::thread spawn();
 };

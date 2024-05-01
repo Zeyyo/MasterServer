@@ -1,22 +1,34 @@
 #include "pch.h"
 #include "FTP.h"
 
-void ftpMod(NetworkLibrary::Session* pSession)
+void ftpMod(NetworkLibrary::SessionData& sessionData)
 {
 	//std::this_thread::sleep_for(std::chrono::seconds(1));
 	std::cerr << " FTP MOD\n";
 
-	ProtocolHandlers::FTP::FileTransferHandler fileTransferHandler(pSession);
-
+	ProtocolHandlers::FTP::FileTransferHandler fileTransferHandler(sessionData);
 }
 
 namespace ProtocolHandlers::FTP
 {
 	void FileTransferHandler::DoInitRequestHandleing()
 	{
-		Utilitis::SocketOperations::Receive(pSession_->socket_, sInitRequestBuffer_, nInitRequestBufferLen_);
+		Utilitis::SocketOperations::Receive(
+			sessionData_.socket,
+			sInitRequestBuffer_,
+			nInitRequestBufferLen_);
+
 		printf("\nData: %s\n", sInitRequestBuffer_);
 
+		bool bHeaderIsValid = Utilitis::CheckRequestFormat::ValidateRequestPattern(
+			Utilitis::CheckRequestFormat::FTPPattern,
+			sInitRequestBuffer_);
+
+		if (!bHeaderIsValid)
+		{
+			// TODO
+			std::cout << "Header not valid!";
+		}
 		DoProcessHeader(sInitRequestBuffer_, nInitRequestBufferLen_);
 	}
 	
@@ -39,7 +51,7 @@ namespace ProtocolHandlers::FTP
 
 			ssHeader >> szFileName >> nFileSize >> szFileExtension;
 			FileData fileData(szFileName, nFileSize, szFileExtension);
-			SOCKET socket = pSession_->socket_;
+			SOCKET socket = sessionData_.socket;
 			CommandManager().RunCommand(szCommand, [&socket, &fileData](CommandManager::CommandIteratorT itCommand)
 				{
 					itCommand->second->RunCommandSync(socket, fileData);
@@ -51,7 +63,7 @@ namespace ProtocolHandlers::FTP
 			ssHeader >> szFileName;
 
 			FileData fileData(szFileName, 0, "");
-			SOCKET socket = pSession_->socket_;
+			SOCKET socket = sessionData_.socket;
 			CommandManager().RunCommand(szCommand, [&socket, &szFileName](CommandManager::CommandIteratorT itCommand)
 				{
 					itCommand->second->RunCommandSync(socket, szFileName);

@@ -6,6 +6,7 @@
 #include "Types/Types.h"
 #include "Events/Logger/OstreamLogger.h"
 #include "Server/ConnectionManager/SessionHandleing/Session/Session.h"
+#include "Server/ConnectionManager/SessionHandleing/SessionQueue/SessionQueue.h"
 
 
 namespace NetworkLibrary

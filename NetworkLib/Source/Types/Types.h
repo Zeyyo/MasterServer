@@ -6,6 +6,22 @@ namespace NetworkLibrary
 {
     typedef __int16 PORT;
 
+    struct SessionData
+    {
+        SessionData(
+            std::string szIpAdress, 
+            SOCKET socket, 
+            sockaddr pAddr) 
+            : 
+            szIpAdress(szIpAdress), 
+            socket(socket), 
+            pAddr(pAddr) 
+        { }
+        std::string szIpAdress;
+        SOCKET socket = NULL;
+        sockaddr pAddr;
+    };
+
     struct SessionHandlerModule
     {
         void* pModule;

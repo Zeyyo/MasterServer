@@ -151,9 +151,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Protocols\FTP\CommandManager\Commands.h" />
-    <ClInclude Include="Source\Protocols\FTP\CommandManager\CommandAssociateFunctions\CommandAssociateFunctions.h" />
-    <ClInclude Include="Source\Protocols\FTP\CommandManager\CommandManager.h" />
+    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\SessionQueue\SessionQueue.h" />
+    <ClInclude Include="Source\Utilities\CheckRequestFormat\CheckRequestFormat.h" />
+    <ClInclude Include="Source\CommandManager\Commands.h" />
+    <ClInclude Include="Source\CommandManager\CommandAssociateFunctions\CommandAssociateFunctions.h" />
+    <ClInclude Include="Source\CommandManager\CommandManager.h" />
     <ClInclude Include="EventHandleing.h" />
     <ClInclude Include="Source\Helpers\OperationHelper\OperationHelper.h" />
     <ClInclude Include="Source\Events\Logger\Logger.h" />
@@ -186,8 +188,10 @@
     <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Protocols\FTP\CommandManager\CommandAssociateFunctions\CommandAssociateFunctions.cpp" />
-    <ClCompile Include="Source\Protocols\FTP\CommandManager\CommandManager.cpp" />
+    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\SessionQueue\SessionQueue.cpp" />
+    <ClCompile Include="Source\Utilities\CheckRequestFormat\CheckRequestFormat.cpp" />
+    <ClCompile Include="Source\CommandManager\CommandAssociateFunctions\CommandAssociateFunctions.cpp" />
+    <ClCompile Include="Source\CommandManager\CommandManager.cpp" />
     <ClCompile Include="Source\Helpers\OperationHelper\OperationHelper.cpp" />
     <ClCompile Include="Source\Events\Logger\OstreamLogger.h" />
     <ClCompile Include="Source\Events\Exceptions\FileOperationExceptions.h" />
@@ -195,7 +199,7 @@
     <ClCompile Include="Source\Events\Exceptions\SessionHandlingExceptions.h" />
     <ClCompile Include="Source\Events\EventHandleing\EventHandling.cpp" />
     <ClCompile Include="Source\Events\ErrorHandling\ErrorHandling.cpp" />
-    <ClCompile Include="Source\Protocols\FTP\CommandManager\ICommand.h" />
+    <ClCompile Include="Source\CommandManager\ICommand.h" />
     <ClCompile Include="Source\Protocols\FTP\FileTransfer\FileTransferOperations.cpp" />
     <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.cpp" />
     <ClCompile Include="Source\Server\ConnectionManager\ConnectionManager.cpp" />

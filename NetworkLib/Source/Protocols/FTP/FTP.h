@@ -7,19 +7,20 @@
 
 #include "Types/FileTypes.h"
 #include "Events/Logger/OstreamLogger.h"
-#include "Utilities/SocketOperations/SocketOperations.h"
 #include "CommandManager/CommandManager.h"
+#include "Utilities/SocketOperations/SocketOperations.h"
+#include "Utilities/CheckRequestFormat/CheckRequestFormat.h"
 #include "Server/ConnectionManager/SessionHandleing/Session/Session.h"
 
-extern void ftpMod(NetworkLibrary::Session* session);
+extern void ftpMod(NetworkLibrary::SessionData& sessionData);
 
 namespace ProtocolHandlers::FTP
 {
 	class FileTransferHandler
 	{
 	public:
-		FileTransferHandler(NetworkLibrary::Session* pSession) : 
-			pSession_(pSession),
+		FileTransferHandler(NetworkLibrary::SessionData& sessionData) :
+			sessionData_(sessionData),
 			nInitRequestBufferLen_(DEFAULT_RECEIVE_BUFFER_LEN)
 		{
 			try
@@ -40,7 +41,7 @@ namespace ProtocolHandlers::FTP
 		//void DoFileRequestHandleing();
 
 	private:
-		NetworkLibrary::Session* pSession_ = NULL;
+		NetworkLibrary::SessionData& sessionData_;
 		size_t nInitRequestBufferLen_;
 		char sInitRequestBuffer_[DEFAULT_RECEIVE_BUFFER_LEN];
 	};

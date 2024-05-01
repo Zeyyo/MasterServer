@@ -13,16 +13,16 @@ DWORD SessionHandler::InitializeSessionHandler()
     return 0;
 }
 
-DWORD SessionHandler::AcceptNewConnection(Session* clientSession)
+DWORD SessionHandler::AcceptNewConnection(std::unique_ptr<Session>&& pClientSession)
 {
     for (;;)
     {
-        SOCKET clientSocket = Utilitis::SocketOperations::Accept(socket_, clientSession->pAddr_, clientSession->addrSize_);
-        clientSession->socket_ = clientSocket;
+        SOCKET clientSocket = Utilitis::SocketOperations::Accept(socket_, pClientSession->pAddr_, pClientSession->addrSize_);
+        pClientSession->socket_ = clientSocket;
         
         if (NetworkLibrary::pWorkerThreadPool == NULL)
             Logger::LOG[Logger::Level::Critical] << "No worker-pool suplied! Session will not be handled." << Logger::endl;
-        enqueue(clientSession);
+        AddSessionToQueue(std::move(pClientSession));
         break;
     }
     return 0;
@@ -34,8 +34,9 @@ void SessionHandler::InitializeConnectionHandler()
     for (;;)
     {
         if (bStop_) break;
-        Session* clientSession = new Session(fnRequestTask);
-        AcceptNewConnection(clientSession);
+        //Session* clientSession = new Session(fnRequestTask);
+        auto clientSession = std::make_unique<Session>(fnRequestTask);
+        AcceptNewConnection(std::move(clientSession));
     }
 }
 
