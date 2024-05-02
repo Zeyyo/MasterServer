@@ -2,8 +2,8 @@
 #include "pch.h"
 #include "Types/Types.h"
 #include "Events/Logger/OstreamLogger.h"
-#include "Server/ConnectionManager/SessionHandleing/WorkerPool/ThreadPool.h"
-#include "Server/ConnectionManager/SessionHandleing/Session/Session.h"
+#include "Server/SessionHandleing/WorkerPool/ThreadPool.h"
+#include "Server/SessionHandleing/Session/Session.h"
 
 #include "Utilities/SocketOperations/SocketOperations.h"
 

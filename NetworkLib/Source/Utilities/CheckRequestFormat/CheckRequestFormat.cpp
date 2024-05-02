@@ -3,7 +3,7 @@
 
 namespace Utilitis::CheckRequestFormat
 {
-	bool ValidateRequestPattern(const std::regex regex, const char* pksHeaderBuffer)
+	bool IsValidRequestPattern(const std::regex regex, const char* pksHeaderBuffer)
 	{
 		std::smatch match;
 		std::string str(pksHeaderBuffer);

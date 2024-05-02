@@ -6,8 +6,8 @@
 #include "Types/Types.h"
 #include "Events/Logger/OstreamLogger.h"
 #include "Protocols/FTP/FTP.h"
-#include "SessionHandleing/WorkerPool/ThreadPool.h"
-#include "SessionHandleing/SessionHandlerCommon/SessionHandlerCommon.h";
+#include "Server/SessionHandleing/WorkerPool/ThreadPool.h"
+#include "Server/SessionHandleing/SessionHandlerCommon/SessionHandlerCommon.h";
 
 namespace NetworkLibrary
 {

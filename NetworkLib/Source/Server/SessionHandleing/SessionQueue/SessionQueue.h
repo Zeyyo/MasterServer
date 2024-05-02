@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-#include "Server/ConnectionManager/SessionHandleing/Session/Session.h"
+#include "Server/SessionHandleing/Session/Session.h"
 
 namespace NetworkLibrary
 {

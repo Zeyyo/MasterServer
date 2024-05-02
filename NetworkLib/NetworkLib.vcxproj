@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\SessionQueue\SessionQueue.h" />
+    <ClInclude Include="Source\Server\SessionHandleing\SessionQueue\SessionQueue.h" />
     <ClInclude Include="Source\Utilities\CheckRequestFormat\CheckRequestFormat.h" />
     <ClInclude Include="Source\CommandManager\Commands.h" />
     <ClInclude Include="Source\CommandManager\CommandAssociateFunctions\CommandAssociateFunctions.h" />
@@ -170,11 +170,11 @@
     <ClInclude Include="Source\Protocols\FTP\config.h" />
     <ClInclude Include="Source\Protocols\FTP\FileTransfer\FileTransferOperations.h" />
     <ClInclude Include="Source\Server\Core\config.h" />
-    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\config.h" />
+    <ClInclude Include="Source\Server\SessionHandleing\WorkerPool\config.h" />
     <ClInclude Include="Source\Types\FileTypes.h" />
     <ClInclude Include="Source\Utilities\FileOperations\FileOperations.h" />
     <ClInclude Include="Source\Utilities\SocketEvents.h" />
-    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.h" />
+    <ClInclude Include="Source\Server\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.h" />
     <ClInclude Include="Source\Server\ConnectionManager\ConnectionManager.h" />
     <ClInclude Include="Source\framework.h" />
     <ClInclude Include="Source\Utilities\SocketOperations\SocketOperations.h" />
@@ -184,11 +184,11 @@
     <ClInclude Include="Source\Server\Core\Core.h" />
     <ClInclude Include="Source\Blankets\rot19\rot19.h" />
     <ClInclude Include="Source\Types\Types.h" />
-    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\ThreadPool.h" />
-    <ClInclude Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.h" />
+    <ClInclude Include="Source\Server\SessionHandleing\WorkerPool\ThreadPool.h" />
+    <ClInclude Include="Source\Server\SessionHandleing\WorkerPool\Worker\Worker.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\SessionQueue\SessionQueue.cpp" />
+    <ClCompile Include="Source\Server\SessionHandleing\SessionQueue\SessionQueue.cpp" />
     <ClCompile Include="Source\Utilities\CheckRequestFormat\CheckRequestFormat.cpp" />
     <ClCompile Include="Source\CommandManager\CommandAssociateFunctions\CommandAssociateFunctions.cpp" />
     <ClCompile Include="Source\CommandManager\CommandManager.cpp" />
@@ -201,13 +201,13 @@
     <ClCompile Include="Source\Events\ErrorHandling\ErrorHandling.cpp" />
     <ClCompile Include="Source\CommandManager\ICommand.h" />
     <ClCompile Include="Source\Protocols\FTP\FileTransfer\FileTransferOperations.cpp" />
-    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.cpp" />
+    <ClCompile Include="Source\Server\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.cpp" />
     <ClCompile Include="Source\Server\ConnectionManager\ConnectionManager.cpp" />
     <ClCompile Include="NetworkLib.cpp" />
     <ClCompile Include="Source\Utilities\FileOperations\FileOperations.cpp" />
     <ClCompile Include="Source\Utilities\SocketOperations\SocketOperations.cpp" />
     <ClCompile Include="Source\Utilities\SocketUtils.h" />
-    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\Session\Session.cpp" />
+    <ClCompile Include="Source\Server\SessionHandleing\Session\Session.cpp" />
     <ClCompile Include="Source\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -219,12 +219,12 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Source\Protocols\FTP\FTP.cpp" />
-    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\Session\Session.h" />
+    <ClCompile Include="Source\Server\SessionHandleing\Session\Session.h" />
     <ClCompile Include="Source\Server\Core\Core.cpp" />
     <ClCompile Include="Source\Blankets\rot19\rot19.cpp" />
-    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\ThreadPool.cpp" />
+    <ClCompile Include="Source\Server\SessionHandleing\WorkerPool\ThreadPool.cpp" />
     <ClCompile Include="Source\Utilities\GetIP.cpp" />
-    <ClCompile Include="Source\Server\ConnectionManager\SessionHandleing\WorkerPool\Worker\Worker.cpp" />
+    <ClCompile Include="Source\Server\SessionHandleing\WorkerPool\Worker\Worker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="header_template.txt" />

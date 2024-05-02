@@ -20,30 +20,25 @@ namespace ProtocolHandlers::FTP
 
 		printf("\nData: %s\n", sInitRequestBuffer_);
 
-		bool bHeaderIsValid = Utilitis::CheckRequestFormat::ValidateRequestPattern(
-			Utilitis::CheckRequestFormat::FTPPattern,
-			sInitRequestBuffer_);
-
-		if (!bHeaderIsValid)
-		{
-			// TODO
-			std::cout << "Header not valid!";
-		}
-		DoProcessHeader(sInitRequestBuffer_, nInitRequestBufferLen_);
+		// Decrypt the sInitRequestBuffer_ -> check if it is a valid header format...
+		ExecuteRequest(sInitRequestBuffer_, nInitRequestBufferLen_);
 	}
 	
-	void FileTransferHandler::DoProcessHeader(const char* pksHeaderBuffer, size_t nHeaderBufferSize)
+	void FileTransferHandler::ExecuteRequest(const char* pksHeaderBuffer, size_t nHeaderBufferSize)
 	{
 		std::istringstream ssHeader(pksHeaderBuffer);
 		std::string szCommand;
 		ssHeader >> szCommand;
 		
-		
-		if (szCommand == "sc")
+		if (Utilitis::CheckRequestFormat::IsValidRequestPattern(
+			Utilitis::CheckRequestFormat::ftpPattern_FileAcquire,
+			sInitRequestBuffer_))
 		{
 			// TODO
 		}
-		if (szCommand == "fa")
+		if (Utilitis::CheckRequestFormat::IsValidRequestPattern(
+			Utilitis::CheckRequestFormat::ftpPattern_FileAcquire,
+			sInitRequestBuffer_))
 		{
 			std::string szFileName;
 			size_t nFileSize;
@@ -57,7 +52,9 @@ namespace ProtocolHandlers::FTP
 					itCommand->second->RunCommandSync(socket, fileData);
 				});
 		}
-		if (szCommand == "fd")
+		if (Utilitis::CheckRequestFormat::IsValidRequestPattern(
+			Utilitis::CheckRequestFormat::ftpPattern_FileDispatch,
+			sInitRequestBuffer_))
 		{
 			std::string szFileName;
 			ssHeader >> szFileName;
@@ -69,5 +66,7 @@ namespace ProtocolHandlers::FTP
 					itCommand->second->RunCommandSync(socket, szFileName);
 				});
 		}
+		// TODO
+		// Invalid header
 	}
 }

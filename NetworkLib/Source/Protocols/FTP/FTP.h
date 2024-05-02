@@ -10,7 +10,7 @@
 #include "CommandManager/CommandManager.h"
 #include "Utilities/SocketOperations/SocketOperations.h"
 #include "Utilities/CheckRequestFormat/CheckRequestFormat.h"
-#include "Server/ConnectionManager/SessionHandleing/Session/Session.h"
+#include "Server/SessionHandleing/Session/Session.h"
 
 extern void ftpMod(NetworkLibrary::SessionData& sessionData);
 
@@ -35,7 +35,7 @@ namespace ProtocolHandlers::FTP
 		}
 
 		void DoInitRequestHandleing();
-		void DoProcessHeader(const char* pksHeaderBuffer, size_t headerBufferSize);
+		void ExecuteRequest(const char* pksHeaderBuffer, size_t headerBufferSize);
 
 		//void DoSetupCallHandleing();
 		//void DoFileRequestHandleing();

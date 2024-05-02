@@ -5,8 +5,10 @@
 
 namespace Utilitis::CheckRequestFormat
 {
-	bool ValidateRequestPattern(const std::regex p, const char* pksHeaderBuffer);
-	inline std::regex FTPPattern("(\\w+),(\\w+),([A-Z]{2}[0-9]{3}[A-Z]{2})");
+	bool IsValidRequestPattern(const std::regex p, const char* pksHeaderBuffer);
+	inline std::regex ftpPattern_FileAcquire("^fa ([^/\\\\:*?\"|<>;=,\\[\\]{}~.]{1,50}) (\\d{1,8}) ([a-zA-Z1-9]{18})$");
+	inline std::regex ftpPattern_FileDispatch("^fd ([A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5})$");
+	inline std::regex ftpPattern_SetupCall("^sc$");
 
 }
 
