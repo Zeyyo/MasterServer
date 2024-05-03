@@ -1,6 +1,6 @@
 #pragma once
-#include "pch.h"
-#include "Server/SessionHandleing/Session/Session.h"
+#include <queue>
+#include "Server/SessionHandling/Session/Session.h"
 
 namespace NetworkLibrary
 {
@@ -16,5 +16,3 @@ namespace NetworkLibrary
 		coThreadContinue.notify_one();
 	}
 }
-
-

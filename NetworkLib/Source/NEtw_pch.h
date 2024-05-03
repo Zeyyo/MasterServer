@@ -1,5 +1,5 @@
-#ifndef PCH_H
-#define PCH_H
+#ifndef NETW_PCH_H
+#define NETW_PCH_H
 
 #include "framework.h"
 
@@ -26,4 +26,4 @@
 #include <Ws2tcpip.h>
 #pragma comment (lib, "Ws2_32.lib")
 
-#endif //PCH_H
+#endif //NETW_PCH_H

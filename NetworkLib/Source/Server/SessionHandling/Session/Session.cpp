@@ -1,4 +1,8 @@
-#include "pch.h"
+#include "NEtw_pch.h"
+
+#include <io.h>
+#include "Events/Logger/OstreamLogger.h"
+
 #include "Session.h"
 
 namespace NetworkLibrary

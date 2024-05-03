@@ -1,12 +1,13 @@
-#include "pch.h"
+#include "NEtw_pch.h"
+
+#include <string>
 #include "CheckRequestFormat.h"
 
 namespace Utilitis::CheckRequestFormat
 {
-	bool IsValidRequestPattern(const std::regex regex, const char* pksHeaderBuffer)
+	bool IsValidRequestPattern(const std::regex regex, std::string pksHeaderBuffer)
 	{
 		std::smatch match;
-		std::string str(pksHeaderBuffer);
-		return std::regex_search(str, match, regex);
+		return std::regex_search(pksHeaderBuffer, match, regex);
 	}
 }

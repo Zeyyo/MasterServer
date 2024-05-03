@@ -1,5 +1,8 @@
 #pragma once
-#include "pch.h"
+#include "NEtw_pch.h"
+
+#include <string>
+#include <exception>
 
 namespace Exceptions::FileOperationExceptions
 {

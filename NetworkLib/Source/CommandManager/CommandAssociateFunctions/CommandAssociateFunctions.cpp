@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "NEtw_pch.h"
 #include "CommandAssociateFunctions.h"
 
 namespace Commands

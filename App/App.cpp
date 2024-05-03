@@ -1,10 +1,10 @@
-// Server
-
 #include <iostream>
-#include "Server/config.h"
-#include "Blankets/rot19/rot19.h"
-#include "Server/Core/Core.h"
-#include "Server/ConnectionManager/ConnectionManager.h"
+#include <Windows.h>
+
+#include "Includes/Core.h"
+#include "Includes/WorkerPool.h"
+#include "Includes/ConnectionManager.h"
+#include "Includes/Types/HandlerModule.h"
 
 using NetworkLibrary::ModuleType;
 

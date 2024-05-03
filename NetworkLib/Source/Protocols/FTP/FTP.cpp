@@ -1,4 +1,22 @@
-#include "pch.h"
+#include "NEtw_pch.h"
+
+#include "config.h"
+#include <map>
+#include <sstream>
+#include "Types/File.h"
+
+#include "Events/Logger/OstreamLogger.h"
+#include "Events/Exceptions/CryptoOperationException.h"
+#include "Events/Exceptions/SocketOperationExceptions.h"
+
+#include "CommandManager/CommandManager.h"
+#include "Server/SessionHandling/Session/Session.h"
+
+#include "Utilities/SocketOperations/SocketOperations.h"
+#include "Utilities/CheckRequestFormat/CheckRequestFormat.h"
+
+#include "Crypto/CryptoService.h"
+
 #include "FTP.h"
 
 void ftpMod(NetworkLibrary::SessionData& sessionData)
@@ -11,34 +29,60 @@ void ftpMod(NetworkLibrary::SessionData& sessionData)
 
 namespace ProtocolHandlers::FTP
 {
-	void FileTransferHandler::DoInitRequestHandleing()
+	void FileTransferHandler::AcceptRequestHeader()
 	{
-		Utilitis::SocketOperations::Receive(
-			sessionData_.socket,
-			sInitRequestBuffer_,
-			nInitRequestBufferLen_);
-
-		printf("\nData: %s\n", sInitRequestBuffer_);
-
-		// Decrypt the sInitRequestBuffer_ -> check if it is a valid header format...
-		ExecuteRequest(sInitRequestBuffer_, nInitRequestBufferLen_);
+		try
+		{
+			Utilitis::SocketOperations::Receive(
+				sessionData_.socket,
+				sInitRequestHeaderBuffer_,
+				nInitRequestBufferLen_);
+		}
+		catch (Exceptions::SocketOperationExceptions::ReceiveTimeOutException& e)
+		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at DoInitRequestHandleing()." << Logger::endl;
+		}
+		printf("\nData: %s\n", sInitRequestHeaderBuffer_);
 	}
 	
-	void FileTransferHandler::ExecuteRequest(const char* pksHeaderBuffer, size_t nHeaderBufferSize)
+	Header FileTransferHandler::DecryptRequestHeader() const
 	{
-		std::istringstream ssHeader(pksHeaderBuffer);
+		const char* ksHeader = "";
+		try
+		{
+			ksHeader = Crypto::CryptoService().RSADecryptHeader(sInitRequestHeaderBuffer_);
+		}
+		catch (Exceptions::CryptoOperationException::HeaderDecryptionException())
+		{
+			// TODO failed to decrypt data -> Close connection
+		}
+
+		size_t nLength = strlen(ksHeader);
+		Header headerData(ksHeader, nLength);
+		return headerData;
+	}
+
+	void FileTransferHandler::ExecuteRequestedCommand(Header header)
+	{
+		std::string szHeaderData = header.headerData;
+		std::istringstream ssHeader(szHeaderData);
 		std::string szCommand;
+		std::string szBodyDecryptionKey;
+
+		ssHeader >> szBodyDecryptionKey;
 		ssHeader >> szCommand;
 		
 		if (Utilitis::CheckRequestFormat::IsValidRequestPattern(
-			Utilitis::CheckRequestFormat::ftpPattern_FileAcquire,
-			sInitRequestBuffer_))
+			Utilitis::CheckRequestFormat::ftpPattern_SetupCall,
+			szHeaderData))
 		{
 			// TODO
 		}
+
 		if (Utilitis::CheckRequestFormat::IsValidRequestPattern(
 			Utilitis::CheckRequestFormat::ftpPattern_FileAcquire,
-			sInitRequestBuffer_))
+			szHeaderData))
 		{
 			std::string szFileName;
 			size_t nFileSize;
@@ -52,9 +96,10 @@ namespace ProtocolHandlers::FTP
 					itCommand->second->RunCommandSync(socket, fileData);
 				});
 		}
+
 		if (Utilitis::CheckRequestFormat::IsValidRequestPattern(
 			Utilitis::CheckRequestFormat::ftpPattern_FileDispatch,
-			sInitRequestBuffer_))
+			szHeaderData))
 		{
 			std::string szFileName;
 			ssHeader >> szFileName;
@@ -67,6 +112,6 @@ namespace ProtocolHandlers::FTP
 				});
 		}
 		// TODO
-		// Invalid header
+		// Invalid header -> Close connection
 	}
 }

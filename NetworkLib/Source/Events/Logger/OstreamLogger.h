@@ -1,6 +1,5 @@
 #pragma once
-#include "pch.h"
-
+#include "NEtw_pch.h"
 #include <ostream>
 #include "Logger.h"
 

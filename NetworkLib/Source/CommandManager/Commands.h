@@ -1,5 +1,4 @@
 #pragma once
-#include "pch.h"
 #include "CommandAssociateFunctions/CommandAssociateFunctions.h"
 #include "ICommand.h"
 

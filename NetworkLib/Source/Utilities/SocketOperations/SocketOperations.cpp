@@ -1,4 +1,11 @@
-#include "pch.h"
+#include "NEtw_pch.h"
+#include <string>
+
+#include "Events/Logger/OstreamLogger.h"
+#include "Helpers/OperationHelper/OperationHelper.h"
+#include "Events/Exceptions/SocketOperationExceptions.h"
+#include "Events/Exceptions/NetworkOperationExceptions.h"
+
 #include "SocketOperations.h"
 
 namespace Utilitis::SocketOperations

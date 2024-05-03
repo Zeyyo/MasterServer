@@ -1,4 +1,14 @@
-#include "pch.h"
+#include "NEtw_pch.h"
+
+#include <fstream>
+#include <filesystem>
+#include <string>
+
+#include "Helpers/OperationHelper/OperationHelper.h"
+#include "Events/Logger/OstreamLogger.h"
+#include "Types/File.h"
+#include "Events/Exceptions/FileOperationExceptions.h"
+
 #include "FileOperations.h"
 
 namespace Utilitis::FileOperations

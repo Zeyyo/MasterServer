@@ -18,25 +18,25 @@
     <ClInclude Include="Source\framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\pch.h">
+    <ClInclude Include="Source\NEtw_pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Blankets\rot19\rot19.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Server\Core\Core.h">
+    <ClInclude Include="Includes\Core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Types\Types.h">
+    <ClInclude Include="Includes\Types\Worker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Server\SessionHandleing\WorkerPool\ThreadPool.h">
+    <ClInclude Include="Includes\WorkerPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Server\ConnectionManager\ConnectionManager.h">
+    <ClInclude Include="Includes\ConnectionManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Server\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.h">
+    <ClInclude Include="Source\Server\SessionHandling\SessionHandlerCommon\SessionHandlerCommon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Events\ErrorHandling\ErrorHandling.h">
@@ -48,9 +48,6 @@
     <ClInclude Include="Source\Server\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Server\SessionHandleing\WorkerPool\Worker\Worker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Utilities\SocketEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -60,7 +57,7 @@
     <ClInclude Include="Source\Server\Core\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Server\SessionHandleing\WorkerPool\config.h">
+    <ClInclude Include="Source\Server\SessionHandling\WorkerPool\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Protocols\FTP\config.h">
@@ -72,13 +69,10 @@
     <ClInclude Include="Source\Protocols\FTP\FileTransfer\FileTransferOperations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Types\FileTypes.h">
+    <ClInclude Include="Source\Types\File.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utilities\FileOperations\FileOperations.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EventHandleing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Events\Exceptions\SocketOperationExceptions.h">
@@ -117,15 +111,36 @@
     <ClInclude Include="Source\Utilities\CheckRequestFormat\CheckRequestFormat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Server\SessionHandleing\SessionQueue\SessionQueue.h">
+    <ClInclude Include="Source\Server\SessionHandling\SessionQueue\SessionQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Crypto\CryptoService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Crypto\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Events\Exceptions\CryptoOperationException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Types\Header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Types\Session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Includes\Types\HandlerModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Server\SessionHandling\Session\Session.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Includes\conf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NetworkLib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\pch.cpp">
+    <ClCompile Include="Source\NEtw_pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Blankets\rot19\rot19.cpp">
@@ -134,16 +149,13 @@
     <ClCompile Include="Source\Server\Core\Core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Server\SessionHandleing\WorkerPool\ThreadPool.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Server\SessionHandleing\Session\Session.h">
+    <ClCompile Include="Source\Server\SessionHandling\WorkerPool\WorkerPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Server\ConnectionManager\ConnectionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Server\SessionHandleing\SessionHandlerCommon\SessionHandlerCommon.cpp">
+    <ClCompile Include="Source\Server\SessionHandling\SessionHandlerCommon\SessionHandlerCommon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Events\ErrorHandling\ErrorHandling.cpp">
@@ -155,10 +167,10 @@
     <ClCompile Include="Source\Utilities\GetIP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Server\SessionHandleing\WorkerPool\Worker\Worker.cpp">
+    <ClCompile Include="Source\Server\SessionHandling\WorkerPool\Worker\Worker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Server\SessionHandleing\Session\Session.cpp">
+    <ClCompile Include="Source\Server\SessionHandling\Session\Session.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utilities\SocketUtils.h">
@@ -203,7 +215,10 @@
     <ClCompile Include="Source\Utilities\CheckRequestFormat\CheckRequestFormat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Server\SessionHandleing\SessionQueue\SessionQueue.cpp">
+    <ClCompile Include="Source\Server\SessionHandling\SessionQueue\SessionQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Crypto\CryptoService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

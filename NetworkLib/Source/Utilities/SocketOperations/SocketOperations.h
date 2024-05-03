@@ -1,12 +1,5 @@
 #pragma once
-#include "pch.h"
-#include <string>
-
-#include "Types/Types.h"
-#include "Events/Logger/OstreamLogger.h"
-#include "Helpers/OperationHelper/OperationHelper.h"
-#include "Events/Exceptions/SocketOperationExceptions.h"
-#include "Events/Exceptions/NetworkOperationExceptions.h"
+#include "Types/Session.h"
 
 namespace Utilitis::SocketOperations
 {
