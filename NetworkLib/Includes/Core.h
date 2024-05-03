@@ -1,11 +1,12 @@
 #pragma once
+#include <sal.h>
 
 namespace NetworkLibrary
 {
 	class Core
 	{
 	public:
-		Core(WORD version)
+		Core(_In_ WORD version)
 		{
 			InitializeCore(version);
 		}

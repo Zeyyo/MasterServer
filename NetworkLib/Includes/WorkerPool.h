@@ -1,4 +1,5 @@
 #pragma once
+#include <sal.h>
 #include <vector>
 #include "conf.h"
 #include "Includes/Types/Worker.h"
@@ -16,11 +17,11 @@ namespace NetworkLibrary
 	class ThreadPool
 	{
 	public:
-		ThreadPool(UINT16 numThreads);
+		ThreadPool(_In_ UINT16 numThreads);
 		~ThreadPool();
 
-		void InitializeIndividualWorkers(UINT16 numWorkers = WORKER_THREADS_MIN);
-		void TerminateIndividualWorkers(UINT16 numWorkers = WORKER_THREADS_ALL);
+		void InitializeIndividualWorkers(_In_ UINT16 numWorkers = WORKER_THREADS_MIN);
+		void TerminateIndividualWorkers(_In_ UINT16 numWorkers = WORKER_THREADS_ALL);
 		void InitializeWorker(ThreadStatusPipe* pipe);
 
 	private:
