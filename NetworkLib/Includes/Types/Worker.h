@@ -4,6 +4,9 @@
 
 namespace NetworkLibrary
 {
+    /// <summary>
+    /// Represents a communication pipe used for managing the status of a worker thread.
+    /// </summary>
     struct ThreadStatusPipe
     {
         bool bBusy = false;
@@ -13,6 +16,9 @@ namespace NetworkLibrary
         bool* pbWorkerObjectTerminated = NULL;
     };
 
+    /// <summary>
+    /// Represents a worker responsible for processing tasks within the ThreadPool.
+    /// </summary>
     class Worker
     {
     public:

@@ -13,7 +13,6 @@ int main()
     NetworkLibrary::Core core(MAKEWORD(2,2));
     NetworkLibrary::ThreadPool threadPool(20);
     NetworkLibrary::ConnectionManager conManager(ModuleType::FTP);
-    //threadPool.TerminateIndividualWorkers(2);
 
     while (1)
     {
