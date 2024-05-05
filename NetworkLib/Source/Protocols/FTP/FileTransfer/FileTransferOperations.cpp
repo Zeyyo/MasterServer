@@ -16,23 +16,34 @@ namespace FileTransferOperations
 {
 	bool ReceiveFile(SOCKET socket, const FileData& kFileData)
 	{
-		char* prawReceiveFileBuffer = new char[kFileData.nFileSize];
-		Utilities::Memory::ZeroBufferMemory(prawReceiveFileBuffer, kFileData.nFileSize);
-		std::string szFileNameNoMangle = kFileData.szFileName;
 		size_t nFileSize = kFileData.nFileSize;
-		std::string szFileExtension = kFileData.szFileExtension;
+		char* prawReceiveFileBuffer = new char[nFileSize];
+		Utilities::Memory::ZeroBufferMemory(prawReceiveFileBuffer, nFileSize);
 
+		std::string szFileExtension = kFileData.szFileExtension;
+		std::string szFileNameNoMangle = kFileData.szFileName;
 		std::string szFileName = Utilities::NameMangling::SuffixMangle(szFileNameNoMangle);
+
 		try
 		{
 			Utilities::SocketOperations::Receive(socket, prawReceiveFileBuffer, nFileSize);
-			Utilities::FileOperations::StoreFile(szFileName, szFileExtension, prawReceiveFileBuffer, DEFAULT_RECEIVE_LOCATION);
 		}
 		catch (Exceptions::SocketOperationExceptions::ReceiveTimeOutException& e)
 		{
 			std::string szErrorMessage = e.GetError();
 			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFile()." << Logger::endl;
 			return false;
+		}
+		catch (Exceptions::SocketOperationExceptions::SocketBufferEmptyException& e)
+		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFile()." << Logger::endl;
+			// TODO: Close connection
+		}
+
+		try 
+		{
+			Utilities::FileOperations::StoreFile(szFileName, "txt", prawReceiveFileBuffer, DEFAULT_RECEIVE_LOCATION);
 		}
 		catch (Exceptions::FileOperationExceptions::FileAlreadyExistsException& e)
 		{

@@ -15,7 +15,7 @@ namespace Utilities::FileOperations
 {
 	void CreateFileForWriting(std::ofstream& outFile, const std::string& kszFilePath)
 	{
-		outFile.open(kszFilePath, std::ios::binary);
+		outFile.open(kszFilePath, std::ios::out);
 		if (!outFile.is_open())
 			throw Exceptions::FileOperationExceptions::FileCreateException(kszFilePath);
 	}
@@ -37,7 +37,7 @@ namespace Utilities::FileOperations
 		ssFilePath << kszSaveStorageLocation << "/" << kszFileName << "." << kszFileExtension;
 		std::string szFilePath = ssFilePath.str();
 
-		if (!std::filesystem::exists(szFilePath))
+		if (std::filesystem::exists(szFilePath))
 			throw Exceptions::FileOperationExceptions::FileAlreadyExistsException(szFilePath);
 
 		std::ofstream outFile;
@@ -49,6 +49,7 @@ namespace Utilities::FileOperations
 			throw Exceptions::FileOperationExceptions::FileCreateTimeOutException("");
 
 		outFile << pkrawFileDataBuffer;
+		outFile.close();
 		Logger::LOG[Logger::Level::Info] << "File \"" << kszFileName << "\" stored!" << Logger::endl;
 	}
 

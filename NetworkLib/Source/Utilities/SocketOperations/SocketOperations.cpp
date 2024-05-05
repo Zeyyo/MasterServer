@@ -79,7 +79,6 @@ namespace Utilities::SocketOperations
     {
         off_t offset = 0;
         clock_t start, end;
-        //ZeroMemory(prawBuffer, nOfBytesToReceive);
         start = clock();
         while (offset < nOfBytesToReceive)
         {
@@ -97,12 +96,12 @@ namespace Utilities::SocketOperations
 
             end = clock();
             DWORD dReceiveTime = end - start;
-            if (nBytesReceived == -2 && offset != 0 && dReceiveTime > 3000)
+            if (nBytesReceived == -2 && dReceiveTime > 3000)
             {
                 throw Exceptions::SocketOperationExceptions::SocketBufferEmptyException("");
             }
 
-            if (nBytesReceived == -2 && offset != 0 && (double(end - start) / double(CLOCKS_PER_SEC)) > 2) continue;
+            if (nBytesReceived == -2) continue;
 
             if (nBytesReceived == 0)
             {
