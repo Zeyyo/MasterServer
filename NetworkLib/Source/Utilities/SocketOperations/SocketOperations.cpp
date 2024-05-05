@@ -77,13 +77,16 @@ namespace Utilitis::SocketOperations
 
     void Receive(SOCKET socket, char* prawBuffer, size_t nOfBytesToReceive, int flags)
     {
-        static off_t offset = 0;
-        while (offset <= nOfBytesToReceive)
+        off_t offset = 0;
+        clock_t start, end;
+        ZeroMemory(prawBuffer, nOfBytesToReceive);
+        start = clock();
+        while (offset < nOfBytesToReceive)
         {
             size_t maxLen = nOfBytesToReceive - offset;
             int nBytesReceived;
-            bool bSuccess = OperationHelper<Exceptions::SocketOperationExceptions::ReceiveDataException>::
-                AttemptOperation(3, 300, [&]()
+            bool bSuccess = Helpers::OperationHelper<Exceptions::SocketOperationExceptions::ReceiveDataException>::
+                AttemptOperation(3, 100, [&]()
                     {
                         nBytesReceived = ReceiveDataFromPeer(socket, prawBuffer, offset, maxLen, flags);
                     }, [](Exceptions::SocketOperationExceptions::ReceiveDataException) {});
@@ -91,12 +94,22 @@ namespace Utilitis::SocketOperations
             {
                 throw Exceptions::SocketOperationExceptions::ReceiveTimeOutException("");
             }
-            if (nBytesReceived == -2) continue;
+
+            end = clock();
+            DWORD dReceiveTime = end - start;
+            if (nBytesReceived == -2 && offset != 0 && dReceiveTime > 3000)
+            {
+                throw Exceptions::SocketOperationExceptions::SocketBufferEmptyException("");
+            }
+
+            if (nBytesReceived == -2 && offset != 0 && (double(end - start) / double(CLOCKS_PER_SEC)) > 2) continue;
+
             if (nBytesReceived == 0)
             {
                 Logger::LOG[Logger::Level::Info] << "Connection has been closed!" << Logger::endl;
-                //return CONNECTION_CLOSED;
+                //return close Session;
             }
+
             if (nBytesReceived > 0)
             {
                 Logger::LOG[Logger::Level::Info] << "Data packets received!" << Logger::endl;
@@ -119,12 +132,12 @@ namespace Utilitis::SocketOperations
 
     void Send(SOCKET socket, const char* pkrawBuffer, size_t nOfBytesToSend, int flags)
     {
-        static off_t offset = 0;
-        while (offset <= nOfBytesToSend)
+        off_t offset = 0;
+        while (offset < nOfBytesToSend)
         {
             size_t packetLen = nOfBytesToSend - offset;
             int nBytesSent;
-            bool bSuccess = OperationHelper<Exceptions::SocketOperationExceptions::SendDataException>::
+            bool bSuccess = Helpers::OperationHelper<Exceptions::SocketOperationExceptions::SendDataException>::
                 AttemptOperation(3, 300, [&]()
                     {
                         nBytesSent = SendDataToPeer(socket, pkrawBuffer, offset, packetLen, flags);

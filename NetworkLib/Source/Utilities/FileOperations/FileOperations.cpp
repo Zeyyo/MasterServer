@@ -41,7 +41,7 @@ namespace Utilitis::FileOperations
 			throw Exceptions::FileOperationExceptions::FileAlreadyExistsException(szFilePath);
 
 		std::ofstream outFile;
-		bool bSuccess = OperationHelper<Exceptions::FileOperationExceptions::FileCreateException>::
+		bool bSuccess = Helpers::OperationHelper<Exceptions::FileOperationExceptions::FileCreateException>::
 			AttemptOperation(3, 300, [&]()
 				{ CreateFileForWriting(outFile, szFilePath); } ,
 				[](Exceptions::FileOperationExceptions::FileCreateException) {});
@@ -65,7 +65,7 @@ namespace Utilitis::FileOperations
 			throw Exceptions::FileOperationExceptions::FileNotFoundException(kszFilePath);
 
 		std::ifstream inFile;
-		bool bSuccess = OperationHelper<Exceptions::FileOperationExceptions::FileLoadException>::
+		bool bSuccess = Helpers::OperationHelper<Exceptions::FileOperationExceptions::FileLoadException>::
 			AttemptOperation(3, 300, [&]()
 				{ OpenFileForReading(inFile, kszFilePath); },
 				[](Exceptions::FileOperationExceptions::FileLoadException) {});

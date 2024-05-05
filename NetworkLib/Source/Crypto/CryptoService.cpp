@@ -67,7 +67,9 @@ namespace Crypto
             std::string message = e.what();
             throw Exceptions::CryptoOperationException::HeaderDecryptionException(message);
         }
-        return szDecryptedData.c_str();
+        char* buffer = new char[szDecryptedData.length()];
+        memcpy_s(buffer, szDecryptedData.length(), szDecryptedData.c_str(), szDecryptedData.length());
+        return buffer;
     }
 }
 

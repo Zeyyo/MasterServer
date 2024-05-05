@@ -8,12 +8,15 @@
 #include "Events/Logger/OstreamLogger.h"
 #include "Events/Exceptions/CryptoOperationException.h"
 #include "Events/Exceptions/SocketOperationExceptions.h"
+#include "Events/Exceptions/NetworkOperationExceptions.h"
 
 #include "CommandManager/CommandManager.h"
 #include "Server/SessionHandling/Session/Session.h"
 
 #include "Utilities/SocketOperations/SocketOperations.h"
 #include "Utilities/CheckRequestFormat/CheckRequestFormat.h"
+
+#include "Helpers/ReceiveHeaderPrefix/ReceiveHeaderPrefix.h"
 
 #include "Crypto/CryptoService.h"
 
@@ -33,17 +36,37 @@ namespace ProtocolHandlers::FTP
 	{
 		try
 		{
+			//int headerLen = Helpers::ReveiveHeaderPrefix(sessionData_.socket);
 			Utilitis::SocketOperations::Receive(
 				sessionData_.socket,
 				sInitRequestHeaderBuffer_,
-				nInitRequestBufferLen_);
+				128);
+		}
+		catch (Exceptions::NetworkOperationExceptions::FailedToReceiveHeaderPrefixException& e)
+		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReveiveHeaderPrefix()." << Logger::endl;
+			// TODO close connection
+		}
+		catch (Exceptions::NetworkOperationExceptions::InvalidHeaderPrefixException& e)
+		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReveiveHeaderPrefix()." << Logger::endl;
+			// TODO close connection
 		}
 		catch (Exceptions::SocketOperationExceptions::ReceiveTimeOutException& e)
 		{
 			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at DoInitRequestHandleing()." << Logger::endl;
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at AcceptRequestHeader()." << Logger::endl;
+			// TODO close connection
 		}
-		printf("\nData: %s\n", sInitRequestHeaderBuffer_);
+		catch (Exceptions::SocketOperationExceptions::SocketBufferEmptyException& e)
+		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at AcceptRequestHeader()." << Logger::endl;
+		}
+
+		printf("\nData: {%s}\n", sInitRequestHeaderBuffer_);
 	}
 	
 	Header FileTransferHandler::DecryptRequestHeader() const
@@ -52,9 +75,12 @@ namespace ProtocolHandlers::FTP
 		try
 		{
 			ksHeader = Crypto::CryptoService().RSADecryptHeader(sInitRequestHeaderBuffer_);
+			std::cout << "I am here";
 		}
-		catch (Exceptions::CryptoOperationException::HeaderDecryptionException())
+		catch (Exceptions::CryptoOperationException::HeaderDecryptionException& e)
 		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at RSADecryptHeader()." << Logger::endl;
 			// TODO failed to decrypt data -> Close connection
 		}
 

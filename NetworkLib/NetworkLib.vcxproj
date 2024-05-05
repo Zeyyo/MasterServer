@@ -179,6 +179,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Helpers\ReceiveHeaderPrefix\ReceiveHeaderPrefix.h" />
     <ClInclude Include="Includes\conf.h" />
     <ClInclude Include="Includes\Filters.h" />
     <ClInclude Include="Includes\Types\HandlerModule.h" />
@@ -224,6 +225,7 @@
     <ClInclude Include="Includes\WorkerPool.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Helpers\ReceiveHeaderPrefix\ReceiveHeaderPrefix.cpp" />
     <ClCompile Include="Source\Utilities\NameMangling\NameMangling.cpp" />
     <ClCompile Include="Source\Crypto\CryptoService.cpp" />
     <ClCompile Include="Source\Server\SessionHandling\SessionQueue\SessionQueue.cpp" />

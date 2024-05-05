@@ -109,4 +109,20 @@ namespace Exceptions::SocketOperationExceptions
             return szErrorMessage;
         }
     };
+
+    class SocketBufferEmptyException : public std::exception {
+    private:
+        std::string szErrorMessage;
+    public:
+        SocketBufferEmptyException(const std::string& details) : szErrorMessage("Socket buffer can not be read, it is empty: " + details) {}
+
+        const char* what() const noexcept override {
+            return szErrorMessage.c_str();
+        }
+        std::string GetError() const
+        {
+            return szErrorMessage;
+        }
+    };
+
 }

@@ -32,7 +32,7 @@ namespace ProtocolHandlers::FTP
 	private:
 		NetworkLibrary::SessionData& sessionData_;
 		size_t nInitRequestBufferLen_;
-		char sInitRequestHeaderBuffer_[DEFAULT_RECEIVE_BUFFER_LEN];
+		char sInitRequestHeaderBuffer_[DEFAULT_RECEIVE_BUFFER_LEN] = "";
 
 	};
 }

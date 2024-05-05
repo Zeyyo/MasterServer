@@ -147,6 +147,9 @@
     <ClInclude Include="Includes\Filters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Helpers\ReceiveHeaderPrefix\ReceiveHeaderPrefix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\NEtw_pch.cpp">
@@ -231,6 +234,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utilities\NameMangling\NameMangling.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Helpers\ReceiveHeaderPrefix\ReceiveHeaderPrefix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
