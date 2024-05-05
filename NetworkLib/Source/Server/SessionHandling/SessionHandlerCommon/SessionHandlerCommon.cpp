@@ -23,7 +23,7 @@ namespace NetworkLibrary
     {
         for (;;)
         {
-            SOCKET clientSocket = Utilitis::SocketOperations::Accept(socket_, pClientSession->pAddr_, pClientSession->addrSize_);
+            SOCKET clientSocket = Utilities::SocketOperations::Accept(socket_, pClientSession->pAddr_, pClientSession->addrSize_);
             pClientSession->socket_ = clientSocket;
 
             if (NetworkLibrary::pWorkerThreadPool == NULL)

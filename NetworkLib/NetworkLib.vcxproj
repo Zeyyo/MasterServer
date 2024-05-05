@@ -179,7 +179,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Helpers\ReceiveHeaderPrefix\ReceiveHeaderPrefix.h" />
+    <ClInclude Include="Source\Utilities\Crypto\Base64EncDec.h" />
+    <ClInclude Include="Source\Utilities\ReceiveHeaderPrefix\ReceiveHeaderPrefix.h" />
     <ClInclude Include="Includes\conf.h" />
     <ClInclude Include="Includes\Filters.h" />
     <ClInclude Include="Includes\Types\HandlerModule.h" />
@@ -223,9 +224,11 @@
     <ClInclude Include="Source\Blankets\rot19\rot19.h" />
     <ClInclude Include="Includes\Types\Worker.h" />
     <ClInclude Include="Includes\WorkerPool.h" />
+    <ClInclude Include="Source\Utilities\ZeroBuffer\ZeroBuffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Helpers\ReceiveHeaderPrefix\ReceiveHeaderPrefix.cpp" />
+    <ClCompile Include="Source\Utilities\Crypto\Base64EncDec.cpp" />
+    <ClCompile Include="Source\Utilities\ReceiveHeaderPrefix\ReceiveHeaderPrefix.cpp" />
     <ClCompile Include="Source\Utilities\NameMangling\NameMangling.cpp" />
     <ClCompile Include="Source\Crypto\CryptoService.cpp" />
     <ClCompile Include="Source\Server\SessionHandling\SessionQueue\SessionQueue.cpp" />
@@ -258,6 +261,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NEtw_pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Source\Protocols\FTP\FTP.cpp" />
+    <ClCompile Include="Source\Utilities\ZeroBuffer\ZeroBuffer.cpp" />
     <ClInclude Include="Source\Server\SessionHandling\Session\Session.h" />
     <ClCompile Include="Source\Server\Core\Core.cpp" />
     <ClCompile Include="Source\Blankets\rot19\rot19.cpp" />

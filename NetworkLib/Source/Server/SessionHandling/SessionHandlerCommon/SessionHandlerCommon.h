@@ -24,8 +24,8 @@ namespace NetworkLibrary
 		{
 			try
 			{
-				socket_ = Utilitis::SocketOperations::GetSocket();
-				Utilitis::SocketOperations::BindSocketToLocalAddress(socket_, port, true, nBackLog);
+				socket_ = Utilities::SocketOperations::GetSocket();
+				Utilities::SocketOperations::BindSocketToLocalAddress(socket_, port, true, nBackLog);
 			}
 			catch (Exceptions::SocketOperationExceptions::SocketCreationException& e)
 			{

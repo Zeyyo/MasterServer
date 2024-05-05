@@ -1,7 +1,7 @@
 #pragma once
 #include "Types/Session.h"
 
-namespace Utilitis::SocketOperations
+namespace Utilities::SocketOperations
 {
     SOCKET GetSocket();
 

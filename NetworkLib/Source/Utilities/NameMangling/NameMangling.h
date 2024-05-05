@@ -2,7 +2,7 @@
 #include "Includes/Types/Time.h"
 #include "Includes/Filters.h"
 
-namespace Utilitis::NameMangling
+namespace Utilities::NameMangling
 {
 	using NetworkLibrary::TimeFormat;
 	std::string SuffixMangle(std::string szBody);

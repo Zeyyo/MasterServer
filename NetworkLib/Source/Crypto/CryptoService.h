@@ -7,7 +7,7 @@ namespace Crypto
     {
     public:
         const char* RSAEncryptHeader(const char* pksBuffer);
-        const char* RSADecryptHeader(const char* pksBuffer);
+        std::string RSADecryptHeader(const char* pksBuffer);
 
     private:
         template <typename Key>

@@ -6,7 +6,7 @@
 
 #include "NameMangling.h"
 
-namespace Utilitis::NameMangling
+namespace Utilities::NameMangling
 {
     std::string GetSuffix()
     {

@@ -5,6 +5,7 @@
 #include "cryptlib.h"
 #include <rsa.h>
 #include "hex.h"
+#include "base64.h"
 #include <io.h>
 #include <osrng.h>
 
@@ -12,7 +13,7 @@
 
 #include "config.h"
 #include "Events/Exceptions/CryptoOperationException.h"
-
+#include "Utilities/Crypto/Base64EncDec.h"
 #include "CryptoService.h"
 
 namespace Crypto
@@ -27,6 +28,7 @@ namespace Crypto
     using CryptoProvider::StringSource;
     using CryptoProvider::StringSink;
     using CryptoProvider::Exception;
+
 
     const char* CryptoService::RSAEncryptHeader(const char* pksBuffer)
     {
@@ -46,30 +48,33 @@ namespace Crypto
             std::string message = e.what();
             throw Exceptions::CryptoOperationException::HeaderEncryptionException(message);
         }
+        //char* buffer = new char[szDecryptedData.length()];
+        //memcpy_s(buffer, szDecryptedData.length(), szDecryptedData.c_str(), szDecryptedData.length());
         return szEncryptedData.c_str();
     }
 
-    const char* CryptoService::RSADecryptHeader(const char* pksBuffer)
-    {
-        AutoSeededRandomPool prng;
-        auto privateKey = loadKey<RSA::PrivateKey>(DEFAULT_RSA_PRIVATE_KEY_LOC);
-        std::string szDecryptedData;
+    
 
+    std::string CryptoService::RSADecryptHeader(const char* pksBuffer)
+    {
+        auto privateKey = loadKey<RSA::PrivateKey>(DEFAULT_RSA_PRIVATE_KEY_LOC);
+        AutoSeededRandomPool prng;
+        std::string szDecrypted = "";
+
+        std::string szDecodedBuffer = Utilities::Crypto::Base64Decode(pksBuffer);
         try
         {
             RSAES_OAEP_SHA_Decryptor d(privateKey);
-            StringSource(pksBuffer, true,
+            StringSource(szDecodedBuffer, true,
                 new PK_DecryptorFilter(prng, d,
-                    new StringSink(szDecryptedData)));
+                    new StringSink(szDecrypted)));
         }
         catch (Exception& e)
         {
             std::string message = e.what();
             throw Exceptions::CryptoOperationException::HeaderDecryptionException(message);
         }
-        char* buffer = new char[szDecryptedData.length()];
-        memcpy_s(buffer, szDecryptedData.length(), szDecryptedData.c_str(), szDecryptedData.length());
-        return buffer;
+        return szDecrypted;
     }
 }
 

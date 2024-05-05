@@ -12,8 +12,8 @@ class CommandManager
 public:
     CommandManager()
     {
-        commands.insert({ "fa", std::make_unique<AcquireFile>() });
-        commands.insert({ "fd", std::make_unique<DispatchFile>() });
+        commands.insert({ szAcquireFileCommand, std::make_unique<AcquireFile>() });
+        commands.insert({ szDispatchFileCommand, std::make_unique<DispatchFile>() });
     }
 
     template<typename Func>
@@ -27,7 +27,12 @@ public:
         return true;
     }
     using CommandIteratorT = std::unordered_map<std::string, std::unique_ptr<ICommand>>::const_iterator;
+    std::string SetCommandAcquireFile() { return szAcquireFileCommand; };
+    std::string SetCommandDispatchFile() { return szDispatchFileCommand; };
 private:
+    std::string szAcquireFileCommand = "fa";
+    std::string szDispatchFileCommand = "fd";
+
     std::unordered_map<std::string, std::unique_ptr<ICommand>> commands;
 };
 

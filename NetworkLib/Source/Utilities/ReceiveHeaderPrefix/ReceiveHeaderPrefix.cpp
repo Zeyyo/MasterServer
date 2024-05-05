@@ -19,7 +19,7 @@ namespace Helpers
 
         try
         {
-            Utilitis::SocketOperations::Receive(
+            Utilities::SocketOperations::Receive(
                 socket,
                 pHeaderPrefixBuffer,
                 len);

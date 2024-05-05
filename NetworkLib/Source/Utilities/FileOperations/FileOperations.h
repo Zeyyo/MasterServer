@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Utilitis::FileOperations
+namespace Utilities::FileOperations
 {
 	void StoreFile(
 		const std::string& szfileName, 

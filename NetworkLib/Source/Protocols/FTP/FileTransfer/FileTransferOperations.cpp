@@ -10,21 +10,23 @@
 #include "FileTransferOperations.h"
 #include "Events/Logger/OstreamLogger.h"
 #include "Utilities/NameMangling/NameMangling.h"
+#include "utilities/ZeroBuffer/ZeroBuffer.h"
 
 namespace FileTransferOperations
 {
 	bool ReceiveFile(SOCKET socket, const FileData& kFileData)
 	{
 		char* prawReceiveFileBuffer = new char[kFileData.nFileSize];
+		Utilities::Memory::ZeroBufferMemory(prawReceiveFileBuffer, kFileData.nFileSize);
 		std::string szFileNameNoMangle = kFileData.szFileName;
 		size_t nFileSize = kFileData.nFileSize;
 		std::string szFileExtension = kFileData.szFileExtension;
 
-		std::string szFileName = Utilitis::NameMangling::SuffixMangle(szFileNameNoMangle);
+		std::string szFileName = Utilities::NameMangling::SuffixMangle(szFileNameNoMangle);
 		try
 		{
-			Utilitis::SocketOperations::Receive(socket, prawReceiveFileBuffer, nFileSize);
-			Utilitis::FileOperations::StoreFile(szFileName, szFileExtension, prawReceiveFileBuffer, DEFAULT_RECEIVE_LOCATION);
+			Utilities::SocketOperations::Receive(socket, prawReceiveFileBuffer, nFileSize);
+			Utilities::FileOperations::StoreFile(szFileName, szFileExtension, prawReceiveFileBuffer, DEFAULT_RECEIVE_LOCATION);
 		}
 		catch (Exceptions::SocketOperationExceptions::ReceiveTimeOutException& e)
 		{
@@ -53,7 +55,7 @@ namespace FileTransferOperations
 		FileData fileData;
 		try
 		{
-			fileData = Utilitis::FileOperations::LoadFile(szFileName, DEFAULT_LOAD_LOCATION);
+			fileData = Utilities::FileOperations::LoadFile(szFileName, DEFAULT_LOAD_LOCATION);
 		}
 		catch (Exceptions::FileOperationExceptions::FileNotFoundException& e)
 		{
@@ -73,7 +75,7 @@ namespace FileTransferOperations
 
 		try 
 		{
-			Utilitis::SocketOperations::Send(socket, prawSendFileBuffer, nFileSize);
+			Utilities::SocketOperations::Send(socket, prawSendFileBuffer, nFileSize);
 		}
 		catch (Exceptions::SocketOperationExceptions::SendTimeOutException& e)
 		{

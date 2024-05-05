@@ -147,7 +147,13 @@
     <ClInclude Include="Includes\Filters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Helpers\ReceiveHeaderPrefix\ReceiveHeaderPrefix.h">
+    <ClInclude Include="Source\Utilities\ReceiveHeaderPrefix\ReceiveHeaderPrefix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utilities\Crypto\Base64EncDec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utilities\ZeroBuffer\ZeroBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -236,7 +242,13 @@
     <ClCompile Include="Source\Utilities\NameMangling\NameMangling.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Helpers\ReceiveHeaderPrefix\ReceiveHeaderPrefix.cpp">
+    <ClCompile Include="Source\Utilities\ReceiveHeaderPrefix\ReceiveHeaderPrefix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utilities\Crypto\Base64EncDec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utilities\ZeroBuffer\ZeroBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -16,7 +16,7 @@
 #include "Utilities/SocketOperations/SocketOperations.h"
 #include "Utilities/CheckRequestFormat/CheckRequestFormat.h"
 
-#include "Helpers/ReceiveHeaderPrefix/ReceiveHeaderPrefix.h"
+#include "Utilities/ReceiveHeaderPrefix/ReceiveHeaderPrefix.h"
 
 #include "Crypto/CryptoService.h"
 
@@ -37,10 +37,10 @@ namespace ProtocolHandlers::FTP
 		try
 		{
 			//int headerLen = Helpers::ReveiveHeaderPrefix(sessionData_.socket);
-			Utilitis::SocketOperations::Receive(
+			Utilities::SocketOperations::Receive(
 				sessionData_.socket,
 				sInitRequestHeaderBuffer_,
-				128);
+				DEFAULT_HEADER_BASE64_HEADER_LEN);
 		}
 		catch (Exceptions::NetworkOperationExceptions::FailedToReceiveHeaderPrefixException& e)
 		{
@@ -71,11 +71,10 @@ namespace ProtocolHandlers::FTP
 	
 	Header FileTransferHandler::DecryptRequestHeader() const
 	{
-		const char* ksHeader = "";
+		std::string kszHeader;
 		try
 		{
-			ksHeader = Crypto::CryptoService().RSADecryptHeader(sInitRequestHeaderBuffer_);
-			std::cout << "I am here";
+			kszHeader = Crypto::CryptoService().RSADecryptHeader(sInitRequestHeaderBuffer_);
 		}
 		catch (Exceptions::CryptoOperationException::HeaderDecryptionException& e)
 		{
@@ -84,8 +83,8 @@ namespace ProtocolHandlers::FTP
 			// TODO failed to decrypt data -> Close connection
 		}
 
-		size_t nLength = strlen(ksHeader);
-		Header headerData(ksHeader, nLength);
+		size_t nLength = kszHeader.length();
+		Header headerData(kszHeader, nLength);
 		return headerData;
 	}
 
@@ -93,46 +92,48 @@ namespace ProtocolHandlers::FTP
 	{
 		std::string szHeaderData = header.headerData;
 		std::istringstream ssHeader(szHeaderData);
-		std::string szCommand;
-		std::string szBodyDecryptionKey;
 
-		ssHeader >> szBodyDecryptionKey;
-		ssHeader >> szCommand;
-		
-		if (Utilitis::CheckRequestFormat::IsValidRequestPattern(
-			Utilitis::CheckRequestFormat::ftpPattern_SetupCall,
+		if (Utilities::CheckRequestFormat::IsValidRequestPattern(
+			Utilities::CheckRequestFormat::ftpPattern_SetupCall,
 			szHeaderData))
 		{
 			// TODO
 		}
 
-		if (Utilitis::CheckRequestFormat::IsValidRequestPattern(
-			Utilitis::CheckRequestFormat::ftpPattern_FileAcquire,
+		if (Utilities::CheckRequestFormat::IsValidRequestPattern(
+			Utilities::CheckRequestFormat::ftpPattern_FileAcquire,
 			szHeaderData))
 		{
 			std::string szFileName;
 			size_t nFileSize;
 			std::string szFileExtension;
+			std::string szCommand;
+			//std::string szBodyDecryptionKey;
 
-			ssHeader >> szFileName >> nFileSize >> szFileExtension;
+			ssHeader >> szCommand >> szFileName >> nFileSize >> szFileExtension;
 			FileData fileData(szFileName, nFileSize, szFileExtension);
 			SOCKET socket = sessionData_.socket;
-			CommandManager().RunCommand(szCommand, [&socket, &fileData](CommandManager::CommandIteratorT itCommand)
+			CommandManager().RunCommand(
+				szCommand,
+				[&socket, &fileData](CommandManager::CommandIteratorT itCommand)
 				{
 					itCommand->second->RunCommandSync(socket, fileData);
 				});
 		}
 
-		if (Utilitis::CheckRequestFormat::IsValidRequestPattern(
-			Utilitis::CheckRequestFormat::ftpPattern_FileDispatch,
+		if (Utilities::CheckRequestFormat::IsValidRequestPattern(
+			Utilities::CheckRequestFormat::ftpPattern_FileDispatch,
 			szHeaderData))
 		{
 			std::string szFileName;
-			ssHeader >> szFileName;
+			std::string szCommand;
+			ssHeader >> szCommand >> szFileName;
 
 			FileData fileData(szFileName, 0, "");
 			SOCKET socket = sessionData_.socket;
-			CommandManager().RunCommand(szCommand, [&socket, &szFileName](CommandManager::CommandIteratorT itCommand)
+			CommandManager().RunCommand(
+				szCommand,
+				[&socket, &szFileName](CommandManager::CommandIteratorT itCommand)
 				{
 					itCommand->second->RunCommandSync(socket, szFileName);
 				});

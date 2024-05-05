@@ -8,7 +8,7 @@
 
 #include "SocketOperations.h"
 
-namespace Utilitis::SocketOperations
+namespace Utilities::SocketOperations
 {
     SOCKET GetSocket()
     {
@@ -79,7 +79,7 @@ namespace Utilitis::SocketOperations
     {
         off_t offset = 0;
         clock_t start, end;
-        ZeroMemory(prawBuffer, nOfBytesToReceive);
+        //ZeroMemory(prawBuffer, nOfBytesToReceive);
         start = clock();
         while (offset < nOfBytesToReceive)
         {

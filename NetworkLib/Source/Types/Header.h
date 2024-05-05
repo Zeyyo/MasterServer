@@ -3,12 +3,12 @@
 struct Header
 {
 	Header(
-		const char* headerData, 
+		std::string headerData, 
 		size_t headerSize) 
 		: 
 		headerData(headerData), 
 		headerSize(headerSize)
 	{}
-	const char* headerData;
+	std::string headerData;
 	size_t headerSize;
 };

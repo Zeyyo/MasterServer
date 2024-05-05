@@ -3,7 +3,7 @@
 #include <string>
 #include "CheckRequestFormat.h"
 
-namespace Utilitis::CheckRequestFormat
+namespace Utilities::CheckRequestFormat
 {
 	bool IsValidRequestPattern(const std::regex regex, std::string pksHeaderBuffer)
 	{

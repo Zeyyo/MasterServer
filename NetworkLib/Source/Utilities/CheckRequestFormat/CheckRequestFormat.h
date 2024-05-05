@@ -1,7 +1,7 @@
 #pragma once
 #include <regex>
 
-namespace Utilitis::CheckRequestFormat
+namespace Utilities::CheckRequestFormat
 {
 	bool IsValidRequestPattern(const std::regex p, std::string pksHeaderBuffer);
 	inline std::regex ftpPattern_FileAcquire("^fa ([^/\\\\:*?\"|<>;=,\\[\\]{}~.]{1,50}) (\\d{1,8}) ([a-zA-Z1-9]{18})$");

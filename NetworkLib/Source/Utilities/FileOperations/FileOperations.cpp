@@ -11,7 +11,7 @@
 
 #include "FileOperations.h"
 
-namespace Utilitis::FileOperations
+namespace Utilities::FileOperations
 {
 	void CreateFileForWriting(std::ofstream& outFile, const std::string& kszFilePath)
 	{
