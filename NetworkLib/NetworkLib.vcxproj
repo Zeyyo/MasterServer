@@ -180,7 +180,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Includes\conf.h" />
+    <ClInclude Include="Includes\Filters.h" />
     <ClInclude Include="Includes\Types\HandlerModule.h" />
+    <ClInclude Include="Includes\Types\Time.h" />
+    <ClInclude Include="Source\Utilities\NameMangling\NameMangling.h" />
     <ClInclude Include="Source\Crypto\config.h" />
     <ClInclude Include="Source\Crypto\CryptoService.h" />
     <ClInclude Include="Source\Events\Exceptions\CryptoOperationException.h" />
@@ -221,6 +224,7 @@
     <ClInclude Include="Includes\WorkerPool.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Utilities\NameMangling\NameMangling.cpp" />
     <ClCompile Include="Source\Crypto\CryptoService.cpp" />
     <ClCompile Include="Source\Server\SessionHandling\SessionQueue\SessionQueue.cpp" />
     <ClCompile Include="Source\Utilities\CheckRequestFormat\CheckRequestFormat.cpp" />

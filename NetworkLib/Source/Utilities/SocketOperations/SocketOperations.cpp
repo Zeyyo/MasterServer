@@ -30,6 +30,7 @@ namespace Utilitis::SocketOperations
     {
         sockaddr_in hint;
         hint.sin_family = AF_INET;
+        port = 9093;
         hint.sin_port = htons(port);
         hint.sin_addr.S_un.S_addr = INADDR_ANY; // inet_pton
 
@@ -68,18 +69,18 @@ namespace Utilitis::SocketOperations
         if (nBytesReceived == SOCKET_ERROR)
         {
             DWORD dwError = WSAGetLastError();
-            if (dwError == WSAEWOULDBLOCK) return NULL;
+            if (dwError == WSAEWOULDBLOCK) return -2;
             throw Exceptions::SocketOperationExceptions::ReceiveDataException(dwError);
         }
         return nBytesReceived;
     }
 
-    void Receive(SOCKET socket, char* prawBuffer, size_t nOfBytesToSend, int flags)
+    void Receive(SOCKET socket, char* prawBuffer, size_t nOfBytesToReceive, int flags)
     {
         static off_t offset = 0;
-        while (offset <= nOfBytesToSend)
+        while (offset <= nOfBytesToReceive)
         {
-            size_t maxLen = nOfBytesToSend - offset;
+            size_t maxLen = nOfBytesToReceive - offset;
             int nBytesReceived;
             bool bSuccess = OperationHelper<Exceptions::SocketOperationExceptions::ReceiveDataException>::
                 AttemptOperation(3, 300, [&]()
@@ -90,7 +91,7 @@ namespace Utilitis::SocketOperations
             {
                 throw Exceptions::SocketOperationExceptions::ReceiveTimeOutException("");
             }
-            if (nBytesReceived == NULL) continue;
+            if (nBytesReceived == -2) continue;
             if (nBytesReceived == 0)
             {
                 Logger::LOG[Logger::Level::Info] << "Connection has been closed!" << Logger::endl;

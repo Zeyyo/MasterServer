@@ -9,16 +9,18 @@
 #include "Events/Exceptions/SocketOperationExceptions.h"
 #include "FileTransferOperations.h"
 #include "Events/Logger/OstreamLogger.h"
+#include "Utilities/NameMangling/NameMangling.h"
 
 namespace FileTransferOperations
 {
 	bool ReceiveFile(SOCKET socket, const FileData& kFileData)
 	{
 		char* prawReceiveFileBuffer = new char[kFileData.nFileSize];
-		std::string szFileName = kFileData.szFileName;
+		std::string szFileNameNoMangle = kFileData.szFileName;
 		size_t nFileSize = kFileData.nFileSize;
 		std::string szFileExtension = kFileData.szFileExtension;
 
+		std::string szFileName = Utilitis::NameMangling::SuffixMangle(szFileNameNoMangle);
 		try
 		{
 			Utilitis::SocketOperations::Receive(socket, prawReceiveFileBuffer, nFileSize);
@@ -38,6 +40,7 @@ namespace FileTransferOperations
 		}
 		catch (Exceptions::FileOperationExceptions::FileCreateTimeOutException& e)
 		{
+			// TODO temporary cache the data
 			std::string szErrorMessage = e.GetError();
 			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFile()." << Logger::endl;
 			return false;

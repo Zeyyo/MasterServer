@@ -30,12 +30,12 @@ namespace NetworkLibrary
 			catch (Exceptions::SocketOperationExceptions::SocketCreationException& e)
 			{
 				std::string szErrorMessage = e.GetError();
-				Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at SessionHandler()" << Logger::endl;
+				Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at GetSocket()" << Logger::endl;
 			}
 			catch (Exceptions::SocketOperationExceptions::BindException& e)
 			{
 				std::string szErrorMessage = e.GetError();
-				Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at SessionHandler()" << Logger::endl;
+				Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at BindSocketToLocalAddress()" << Logger::endl;
 			}
 		}
 

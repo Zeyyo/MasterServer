@@ -24,7 +24,7 @@ namespace Exceptions::SocketOperationExceptions
     private:
         std::string szErrorMessage;
     public:
-        BindException(const DWORD& error) : szErrorMessage("Failed to bind socket: " + error) {}
+        BindException(const DWORD& error) : szErrorMessage("Failed to bind socket: " + std::to_string(error)) {}
 
         const char* what() const noexcept override {
             return szErrorMessage.c_str();
@@ -39,7 +39,7 @@ namespace Exceptions::SocketOperationExceptions
     private:
         std::string szErrorMessage;
     public:
-        AcceptException(const DWORD& error) : szErrorMessage("Failed to accept connection: " + error) {}
+        AcceptException(const DWORD& error) : szErrorMessage("Failed to accept connection: " + std::to_string(error)) {}
 
         const char* what() const noexcept override {
             return szErrorMessage.c_str();
@@ -54,7 +54,7 @@ namespace Exceptions::SocketOperationExceptions
     private:
         std::string szErrorMessage;
     public:
-        ReceiveDataException(const DWORD& address) : szErrorMessage("Failed to receive data from peer: " + address) {}
+        ReceiveDataException(const DWORD& address) : szErrorMessage("Failed to receive data from peer: " + std::to_string(address)) {}
 
         const char* what() const noexcept override {
             return szErrorMessage.c_str();
@@ -84,7 +84,7 @@ namespace Exceptions::SocketOperationExceptions
     private:
         std::string szErrorMessage;
     public:
-        SendDataException(const DWORD& address) : szErrorMessage("Failed to send data to peer: " + address) {}
+        SendDataException(const DWORD& address) : szErrorMessage("Failed to send data to peer: " + std::to_string(address)) {}
 
         const char* what() const noexcept override {
             return szErrorMessage.c_str();
