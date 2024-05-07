@@ -156,6 +156,9 @@
     <ClInclude Include="Source\Utilities\ZeroBuffer\ZeroBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Utilities\Crypto\HexEncDec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\NEtw_pch.cpp">
@@ -249,6 +252,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utilities\ZeroBuffer\ZeroBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utilities\Crypto\HexEncDec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

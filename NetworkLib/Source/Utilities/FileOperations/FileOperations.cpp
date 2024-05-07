@@ -30,7 +30,7 @@ namespace Utilities::FileOperations
 	void StoreFile(
 		const std::string& kszFileName, 
 		const std::string& kszFileExtension, 
-		const char* pkrawFileDataBuffer, 
+		const std::string& pkrawFileDataBuffer,
 		const std::string& kszSaveStorageLocation)
 	{
 		std::ostringstream ssFilePath;

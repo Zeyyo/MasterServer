@@ -8,6 +8,11 @@ public:
     {
         Commands::DoFileAcquire(socket, fileData);
     }
+
+    void RunCommandSync(const SOCKET socket, Base64FileData& fileData) override
+    {
+        Commands::DoFileAcquire(socket, fileData);
+    }
 };
 
 class DispatchFile : public ICommand {

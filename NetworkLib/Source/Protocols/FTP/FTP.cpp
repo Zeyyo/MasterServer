@@ -108,10 +108,12 @@ namespace ProtocolHandlers::FTP
 			size_t nFileSize;
 			std::string szFileExtension;
 			std::string szCommand;
-			//std::string szBodyDecryptionKey;
 
-			ssHeader >> szCommand >> szFileName >> nFileSize >> szFileExtension;
-			FileData fileData(szFileName, nFileSize, szFileExtension);
+			std::string szKey;
+			std::string szIv;
+
+			ssHeader >> szCommand >> szKey >> szIv >> szFileName >> nFileSize >> szFileExtension;
+			Base64FileData fileData(szFileName, nFileSize, szFileExtension, szKey, szIv);
 			SOCKET socket = sessionData_.socket;
 			CommandManager().RunCommand(
 				szCommand,

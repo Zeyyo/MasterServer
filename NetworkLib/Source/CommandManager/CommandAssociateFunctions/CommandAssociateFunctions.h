@@ -6,5 +6,6 @@
 namespace Commands
 {
 	void DoFileAcquire(const SOCKET socket, FileData& fileData);
+	void DoFileAcquire(const SOCKET socket, Base64FileData& fileData);
 	void DoFileDispatch(const SOCKET socket, std::string& szFileName);
 }

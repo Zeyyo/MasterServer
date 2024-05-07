@@ -34,4 +34,35 @@ namespace Exceptions::CryptoOperationException
             return szErrorMessage;
         }
     };
+
+    class DataEncryptionException : public std::exception {
+    private:
+        std::string szErrorMessage;
+    public:
+        DataEncryptionException(const std::string& message) : szErrorMessage("Failed to encrypt data: " + message) {}
+
+        const char* what() const noexcept override {
+            return szErrorMessage.c_str();
+        }
+        std::string GetError() const
+        {
+            return szErrorMessage;
+        }
+    };
+
+    class DataDecryptionException : public std::exception {
+    private:
+        std::string szErrorMessage;
+    public:
+        DataDecryptionException(const std::string& message) : szErrorMessage("Failed to decrypt data: " + message) {}
+
+        const char* what() const noexcept override {
+            return szErrorMessage.c_str();
+        }
+        std::string GetError() const
+        {
+            return szErrorMessage;
+        }
+    };
+
 }

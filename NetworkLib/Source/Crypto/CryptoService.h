@@ -9,6 +9,9 @@ namespace Crypto
         const char* RSAEncryptHeader(const char* pksBuffer);
         std::string RSADecryptHeader(const char* pksBuffer);
 
+        const char* DSAEncryptData(const char* pksDataBuffer);
+        std::string DSADecryptData(const char* pksDataBuffer, std::string szKey, std::string szIv);
+
     private:
         template <typename Key>
         const Key loadKey(const std::string& filename)

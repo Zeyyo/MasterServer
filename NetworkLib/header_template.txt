@@ -6,5 +6,5 @@ Operation: sc, fd, fa, ... [Headers]
 <Operation: fa> <FileName> <FileSize> <FileExtensionKey>
 <Operation: fd> <FileName>
 
-fa supersecretinfo 1024 3y4uad5udsmyd4s9df
+fa supersecretinfo 03DD5876F8310C73B044610B1AF64391 7D3C638BB6B07AEE28AA06B93DA48123 1024 3y4uad5udsmyd4s9df
 fd N9TFT-9GF0A-B7FHQ

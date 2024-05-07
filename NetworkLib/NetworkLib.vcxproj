@@ -179,6 +179,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Utilities\Crypto\HexEncDec.h" />
     <ClInclude Include="Source\Utilities\Crypto\Base64EncDec.h" />
     <ClInclude Include="Source\Utilities\ReceiveHeaderPrefix\ReceiveHeaderPrefix.h" />
     <ClInclude Include="Includes\conf.h" />
@@ -227,6 +228,7 @@
     <ClInclude Include="Source\Utilities\ZeroBuffer\ZeroBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Utilities\Crypto\HexEncDec.cpp" />
     <ClCompile Include="Source\Utilities\Crypto\Base64EncDec.cpp" />
     <ClCompile Include="Source\Utilities\ReceiveHeaderPrefix\ReceiveHeaderPrefix.cpp" />
     <ClCompile Include="Source\Utilities\NameMangling\NameMangling.cpp" />
