@@ -11,6 +11,7 @@ namespace Crypto
 
         const char* DSAEncryptData(const char* pksDataBuffer);
         std::string DSADecryptData(const char* pksDataBuffer, std::string szKey, std::string szIv);
+        char* DSADecryptFileData(const char* pksDataBuffer, std::string szKey, std::string szIv);
 
     private:
         template <typename Key>

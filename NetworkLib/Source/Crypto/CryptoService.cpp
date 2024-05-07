@@ -37,6 +37,8 @@ namespace Crypto
     using CryptoProvider::SecByteBlock;
     using CryptoProvider::CBC_Mode;
     using CryptoProvider::StreamTransformationFilter;
+    using CryptoProvider::ArraySink;
+    using CryptoProvider::byte;
     
 
     const char* CryptoService::RSAEncryptHeader(const char* pksBuffer)
@@ -117,6 +119,35 @@ namespace Crypto
         }
         return recovered;
     }
+
+    char* CryptoService::DSADecryptFileData(const char* pksDataBuffer, std::string szKey, std::string szIv) 
+    {
+        SecByteBlock key = Utilities::Crypto::StringToSecByteBlockDecode(szKey);
+        SecByteBlock iv = Utilities::Crypto::StringToSecByteBlockDecode(szIv);
+
+        char* pDecodedBuffer = Utilities::Crypto::Base64DecodeFileData(pksDataBuffer);
+        int inputSize = strlen(pDecodedBuffer);
+        char* recovered = new char[inputSize];
+
+        try {
+            CBC_Mode<AES>::Decryption cbcDecryption;
+            cbcDecryption.SetKeyWithIV(key, key.size(), iv);
+
+            ArraySink sink((byte*)recovered, inputSize);
+            StreamTransformationFilter decryptor(cbcDecryption, &sink);
+            decryptor.Put((const byte*)pDecodedBuffer, inputSize);
+            decryptor.MessageEnd();
+        }
+        catch (const Exception& e) {
+            std::string message = e.what();
+            delete[] pDecodedBuffer;
+            throw Exceptions::CryptoOperationException::DataDecryptionException(message);
+        }
+
+        delete[] pDecodedBuffer;
+        return recovered;
+    }
+
 }
 
 bool Crypto::CryptoService::operator==(const CryptoService& other) const

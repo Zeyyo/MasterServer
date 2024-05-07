@@ -42,10 +42,10 @@ namespace FileTransferOperations
 			// TODO: Close connection
 		}
 
-		std::string szFileData;
+		const char* szFileData = NULL;
 		try
 		{
-			szFileData = Crypto::CryptoService().DSADecryptData(
+			szFileData = Crypto::CryptoService().DSADecryptFileData(
 				kFileData.pBase64EncodedBinary, 
 				kFileData.szKey,
 				kFileData.szIv);
