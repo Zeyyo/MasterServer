@@ -1,11 +1,11 @@
 #include "NEtw_pch.h"
 #include "CommandAssociateFunctions.h"
 
-namespace Commands
+namespace CommandManager::Commands
 {
-	void DoFileAcquire(const SOCKET socket, FileData& fileData)
+	void DoFileAcquireSecure(const SOCKET socket, Base64FileDataSecure& fileData)
 	{
-		bool bFileAcquireSuccess = FileTransferOperations::ReceiveFile(socket, fileData);
+		bool bFileAcquireSuccess = FileTransferOperations::ReceiveFileSecure(socket, fileData);
 	}
 
 	void DoFileAcquire(const SOCKET socket, Base64FileData& fileData)

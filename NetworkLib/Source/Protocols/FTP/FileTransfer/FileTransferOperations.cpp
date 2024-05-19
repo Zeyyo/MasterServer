@@ -2,125 +2,82 @@
 
 #include "Protocols/FTP/config.h"
 #include "Types/File.h"
+
 #include "Utilities/SocketOperations/SocketOperations.h"
 #include "Utilities/FileOperations/FileOperations.h"
+#include "Utilities/Packing/Packing.h"
+#include "Utilities/NameMangling/NameMangling.h"
+#include "utilities/ZeroBuffer/ZeroBuffer.h"
+
 #include "Events/Exceptions/FileTransferHandlerExceptions.h"
 #include "Events/Exceptions/FileOperationExceptions.h"
 #include "Events/Exceptions/SocketOperationExceptions.h"
 #include "Events/Exceptions/CryptoOperationException.h"
 #include "FileTransferOperations.h"
 #include "Events/Logger/OstreamLogger.h"
-#include "Utilities/NameMangling/NameMangling.h"
-#include "utilities/ZeroBuffer/ZeroBuffer.h"
+
 #include "Crypto/CryptoService.h"
 
 namespace FileTransferOperations
 {
-	bool ReceiveFile(SOCKET socket, Base64FileData& kFileData)
+	bool ReceiveFileSecure(SOCKET socket, Base64FileDataSecure& kFileData)
 	{
-		size_t nFileSize = kFileData.nFileSize;
-		kFileData.pBase64EncodedBinary = new char[nFileSize];
-		Utilities::Memory::ZeroBufferMemory(kFileData.pBase64EncodedBinary, nFileSize);
-		std::string szFileExtension = kFileData.szFileExtension;
-		std::string szFileNameNoMangle = kFileData.szFileName;
-		std::string szFileName = Utilities::NameMangling::SuffixMangle(szFileNameNoMangle);
+		kFileData.pPackagedFileBinary->binary = new char[kFileData.nFileSize];
+		Utilities::Memory::ZeroBufferMemory(kFileData.pPackagedFileBinary->binary, kFileData.nFileSize);
+		Utilities::NameMangling::SuffixMangle(kFileData.szFileName);
 
-		try
-		{
-			Utilities::SocketOperations::Receive(socket, kFileData.pBase64EncodedBinary, nFileSize);
-		}
-		catch (Exceptions::SocketOperationExceptions::ReceiveTimeOutException& e)
-		{
-			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFile()." << Logger::endl;
+		bool success = Utilities::SocketOperations::ReceiveFileFromPeer(
+			socket,
+			kFileData.pPackagedFileBinary->binary,
+			kFileData.nFileSize);
+		if (!success)
 			return false;
-		}
-		catch (Exceptions::SocketOperationExceptions::SocketBufferEmptyException& e)
-		{
-			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFile()." << Logger::endl;
-			// TODO: Close connection
-		}
-
-		const char* szFileData = NULL;
-		try
-		{
-			szFileData = Crypto::CryptoService().DSADecryptFileData(
-				kFileData.pBase64EncodedBinary, 
-				kFileData.szKey,
-				kFileData.szIv);
-		}
-		catch (Exceptions::CryptoOperationException::DataDecryptionException& e)
-		{
-			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at RSADecryptHeader()." << Logger::endl;
-			// TODO failed to decrypt data -> Close connection
-		}
 		
-		try 
-		{
-			Utilities::FileOperations::StoreFile(szFileName, "jpg", szFileData, DEFAULT_RECEIVE_LOCATION);
-		}
-		catch (Exceptions::FileOperationExceptions::FileAlreadyExistsException& e)
-		{
-			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFile()." << Logger::endl;
+		success = Utilities::Packing::UnpackFileSecure(
+			kFileData.pFileBinary->binary,
+			kFileData.nFileSize,
+			kFileData.pPackagedFileBinary->binary,
+			kFileData.szKey,
+			kFileData.szIv);
+		if (!success)
 			return false;
-		}
-		catch (Exceptions::FileOperationExceptions::FileCreateTimeOutException& e)
-		{
-			// TODO temporary cache the data
-			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFile()." << Logger::endl;
+
+		success = Utilities::FileOperations::SaveFileSecure(
+			kFileData, 
+			DEFAULT_RECEIVE_LOCATION);
+		if (!success)
 			return false;
-		}
 		return true;
 	}
 
-	bool ReceiveFile(SOCKET socket, FileData& kFileData)
+	bool ReceiveFile(SOCKET socket, Base64FileData& kFileData)
 	{
-		size_t nFileSize = kFileData.nFileSize;
-		char* prawReceiveFileBuffer = new char[nFileSize];
-		Utilities::Memory::ZeroBufferMemory(prawReceiveFileBuffer, nFileSize);
+		kFileData.pPackagedFileBinary->binary = new char[kFileData.nFileSize];
+		Utilities::Memory::ZeroBufferMemory(kFileData.pPackagedFileBinary->binary, kFileData.nFileSize);
+		Utilities::NameMangling::SuffixMangle(kFileData.szFileName);
 
-		std::string szFileExtension = kFileData.szFileExtension;
-		std::string szFileNameNoMangle = kFileData.szFileName;
-		std::string szFileName = Utilities::NameMangling::SuffixMangle(szFileNameNoMangle);
+		bool success = Utilities::SocketOperations::ReceiveFileFromPeer(
+			socket,
+			kFileData.pPackagedFileBinary->binary,
+			kFileData.nFileSize);
+		if (!success)
+			return false;
 
-		try
-		{
-			Utilities::SocketOperations::Receive(socket, prawReceiveFileBuffer, nFileSize);
-		}
-		catch (Exceptions::SocketOperationExceptions::ReceiveTimeOutException& e)
-		{
-			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFile()." << Logger::endl;
+		success = Utilities::Packing::UnpackFile(
+			kFileData.pFileBinary->binary,
+			kFileData.nFileSize,
+			kFileData.pPackagedFileBinary->binary,
+			kFileData.szKey,
+			kFileData.szIv);
+		if (!success)
 			return false;
-		}
-		catch (Exceptions::SocketOperationExceptions::SocketBufferEmptyException& e)
-		{
-			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFile()." << Logger::endl;
-			// TODO: Close connection
-		}
 
-		try
-		{
-			Utilities::FileOperations::StoreFile(szFileName, "txt", prawReceiveFileBuffer, DEFAULT_RECEIVE_LOCATION);
-		}
-		catch (Exceptions::FileOperationExceptions::FileAlreadyExistsException& e)
-		{
-			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFile()." << Logger::endl;
+		success = Utilities::FileOperations::SaveFile(
+			kFileData,
+			DEFAULT_RECEIVE_LOCATION);
+		if (!success)
 			return false;
-		}
-		catch (Exceptions::FileOperationExceptions::FileCreateTimeOutException& e)
-		{
-			// TODO temporary cache the data
-			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFile()." << Logger::endl;
-			return false;
-		}
+
 		return true;
 	}
 
@@ -145,7 +102,7 @@ namespace FileTransferOperations
 
 		}
 		size_t nFileSize = fileData.nFileSize;
-		char* prawSendFileBuffer = fileData.prawBinaryFileData;
+		char* prawSendFileBuffer = fileData.pFileBinary->binary;
 
 		try 
 		{

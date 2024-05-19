@@ -5,8 +5,6 @@
 class ICommand {
 public:
     virtual ~ICommand() = default;
-    virtual void RunCommandSync(const SOCKET socket, FileData& fileData) {}
-    virtual void RunCommandSync(const SOCKET socket, Base64FileData& fileData) {}
-    virtual void RunCommandSync(const SOCKET socket, std::string& szFileName) {}
+    virtual void Execute(std::istringstream& ssHeader, SOCKET socket) = 0;
 };
 

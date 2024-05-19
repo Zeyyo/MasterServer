@@ -21,7 +21,7 @@
 #include "Utilities/Crypto/HexEncDec.h"
 #include "CryptoService.h"
 
-namespace Crypto
+namespace CryptoService
 {
     namespace CryptoProvider = CryptoPP;
     using CryptoProvider::AutoSeededRandomPool;
@@ -64,19 +64,16 @@ namespace Crypto
         return szEncryptedData.c_str();
     }
 
-    
-
-    std::string CryptoService::RSADecryptHeader(const char* pksBuffer)
+    std::string CryptoService::RSADecryptHeaderData(std::string pksBuffer)
     {
         auto privateKey = loadKey<RSA::PrivateKey>(DEFAULT_RSA_PRIVATE_KEY_LOC);
         AutoSeededRandomPool prng;
         std::string recovered;
 
-        std::string szDecodedBuffer = Utilities::Crypto::Base64Decode(pksBuffer);
         try
         {
             RSAES_OAEP_SHA_Decryptor d(privateKey);
-            StringSource(szDecodedBuffer, true,
+            StringSource(pksBuffer, true,
                 new PK_DecryptorFilter(prng, d,
                     new StringSink(recovered)));
         }
@@ -120,37 +117,33 @@ namespace Crypto
         return recovered;
     }
 
-    char* CryptoService::DSADecryptFileData(const char* pksDataBuffer, std::string szKey, std::string szIv) 
+    char* CryptoService::DSADecryptFileData(const char* pkDataBuffer, size_t fileSize, std::string szKey, std::string szIv) 
     {
         SecByteBlock key = Utilities::Crypto::StringToSecByteBlockDecode(szKey);
         SecByteBlock iv = Utilities::Crypto::StringToSecByteBlockDecode(szIv);
 
-        char* pDecodedBuffer = Utilities::Crypto::Base64DecodeFileData(pksDataBuffer);
-        int inputSize = strlen(pDecodedBuffer);
-        char* recovered = new char[inputSize];
+        char* recovered = new char[fileSize];
 
         try {
             CBC_Mode<AES>::Decryption cbcDecryption;
             cbcDecryption.SetKeyWithIV(key, key.size(), iv);
 
-            ArraySink sink((byte*)recovered, inputSize);
-            StreamTransformationFilter decryptor(cbcDecryption, &sink);
-            decryptor.Put((const byte*)pDecodedBuffer, inputSize);
+            StreamTransformationFilter decryptor(cbcDecryption, new ArraySink((byte*)recovered, fileSize));
+            decryptor.Put((const byte*)pkDataBuffer, fileSize);
             decryptor.MessageEnd();
         }
         catch (const Exception& e) {
             std::string message = e.what();
-            delete[] pDecodedBuffer;
+            delete[] pkDataBuffer;
             throw Exceptions::CryptoOperationException::DataDecryptionException(message);
         }
 
-        delete[] pDecodedBuffer;
+        delete[] pkDataBuffer;
         return recovered;
     }
 
-}
-
-bool Crypto::CryptoService::operator==(const CryptoService& other) const
-{
-    return false;
+    bool CryptoService::operator==(const CryptoService& other) const
+    {
+        return false;
+    }
 }

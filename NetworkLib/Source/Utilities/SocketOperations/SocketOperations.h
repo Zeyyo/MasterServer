@@ -27,4 +27,16 @@ namespace Utilities::SocketOperations
         const char* pkrawBuffer, 
         size_t nOfBytesToSend, 
         int flags = 0);
+
+    bool ReceiveHeaderFromPeer(
+        SOCKET socket,
+        char* prawBuffer,
+        size_t nOfBytesToReceive,
+        int flags = 0);
+
+    bool ReceiveFileFromPeer(
+        SOCKET socket,
+        char* prawBuffer,
+        size_t nOfBytesToReceive,
+        int flags = 0);
 }

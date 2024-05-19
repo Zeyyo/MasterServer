@@ -8,6 +8,9 @@
 #include "Events/Logger/OstreamLogger.h"
 #include "Types/File.h"
 #include "Events/Exceptions/FileOperationExceptions.h"
+#include "Events/Exceptions/CryptoOperationException.h"
+#include "Crypto/CryptoService.h"
+#include "Utilities/Crypto/Base64EncDec.h"
 
 #include "FileOperations.h"
 
@@ -31,6 +34,7 @@ namespace Utilities::FileOperations
 		const std::string& kszFileName, 
 		const std::string& kszFileExtension, 
 		const char* pkrawFileDataBuffer,
+		size_t length,
 		const std::string& kszSaveStorageLocation)
 	{
 		std::ostringstream ssFilePath;
@@ -48,7 +52,10 @@ namespace Utilities::FileOperations
 		if (bSuccess == false)
 			throw Exceptions::FileOperationExceptions::FileCreateTimeOutException("");
 
-		outFile << pkrawFileDataBuffer;
+		// outFile << pkrawFileDataBuffer;
+
+		outFile.write(pkrawFileDataBuffer, length);
+
 		outFile.close();
 		Logger::LOG[Logger::Level::Info] << "File \"" << kszFileName << "\" stored!" << Logger::endl;
 	}
@@ -80,9 +87,63 @@ namespace Utilities::FileOperations
 		inFile.read(prawLoadFileBuffer, knFileSize);
 
 		FileData fileData(kszFileName, knFileSize, kszFileExtension);
-		fileData.prawBinaryFileData = prawLoadFileBuffer;
+		fileData.pFileBinary->binary = prawLoadFileBuffer;
+		fileData.pFileBinary->length = knFileSize;
 
 		Logger::LOG[Logger::Level::Info] << "File \"" << kszFileName << "\" loaded!" << Logger::endl;
 		return fileData;
 	}
+
+	bool SaveFile(Base64FileData& kFileData, std::string location)
+	{
+		try
+		{
+			Utilities::FileOperations::StoreFile(
+				kFileData.szFileName,
+				/*kFileData.szFileExtension*/ "jpg",
+				kFileData.pFileBinary->binary,
+				kFileData.pFileBinary->length,
+				location);
+		}
+		catch (Exceptions::FileOperationExceptions::FileAlreadyExistsException& e)
+		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at SaveFile()." << Logger::endl;
+			return false;
+		}
+		catch (Exceptions::FileOperationExceptions::FileCreateTimeOutException& e)
+		{
+			// TODO temporary cache the data
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at SaveFile()." << Logger::endl;
+			return false;
+		}
+	}
+
+	bool SaveFileSecure(Base64FileDataSecure& kFileData, std::string location)
+	{
+		try
+		{
+			Utilities::FileOperations::StoreFile(
+				kFileData.szFileName,
+				/*kFileData.szFileExtension*/ "jpg",
+				kFileData.pFileBinary->binary,
+				kFileData.nFileSize,
+				location);
+		}
+		catch (Exceptions::FileOperationExceptions::FileAlreadyExistsException& e)
+		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at SaveFile()." << Logger::endl;
+			return false;
+		}
+		catch (Exceptions::FileOperationExceptions::FileCreateTimeOutException& e)
+		{
+			// TODO temporary cache the data
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at SaveFile()." << Logger::endl;
+			return false;
+		}
+	}
+
 }

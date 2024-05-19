@@ -25,10 +25,10 @@ namespace Utilities::NameMangling
         return suffix;
     }
 
-	std::string SuffixMangle(std::string szBody)
+	void SuffixMangle(std::string& szBody)
 	{
         std::string suffix = GetSuffix();
         std::string szResult = szBody + "-" + suffix;
-        return szResult;
+        szBody = szResult;
 	}
 }

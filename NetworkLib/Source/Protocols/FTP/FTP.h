@@ -3,6 +3,7 @@
 #include "Types/Session.h"
 
 #include "config.h"
+#include <CommandManager/CommandTable.h>
 
 extern void ftpMod(NetworkLibrary::SessionData& sessionData);
 
@@ -17,13 +18,11 @@ namespace ProtocolHandlers::FTP
 			sessionData_(sessionData),
 			nInitRequestBufferLen_(DEFAULT_RECEIVE_BUFFER_LEN)
 		{
-			AcceptRequestHeader();
-			Header header = DecryptRequestHeader();
-			ExecuteRequestedCommand(header);
+			CommandManager::RegisterCommands();
 		}
 
-		void AcceptRequestHeader();
-		Header DecryptRequestHeader() const;
+		void ProcessRequest();
+		Header AcceptRequestHeader();
 		void ExecuteRequestedCommand(Header);
 
 		//void DoSetupCallHandleing();

@@ -2,23 +2,51 @@
 #include "CommandAssociateFunctions/CommandAssociateFunctions.h"
 #include "ICommand.h"
 
-class AcquireFile : public ICommand {
-public:
-    void RunCommandSync(const SOCKET socket, FileData& fileData) override
-    {
-        Commands::DoFileAcquire(socket, fileData);
-    }
+namespace CommandManager::Commands
+{
+    class SetupCall : public ICommand {
+    public:
+        void Execute(std::istringstream& ssHeader, SOCKET socket) override {
+            // TODO: Implement the setup call command logic
+        }
+    };
 
-    void RunCommandSync(const SOCKET socket, Base64FileData& fileData) override
-    {
-        Commands::DoFileAcquire(socket, fileData);
-    }
-};
+    class FileAcquire : public ICommand {
+    public:
+        void Execute(std::istringstream& ssHeader, SOCKET socket) override {
+            std::string szCommand, szKey, szIv, szFileName;
+            size_t nFileSize;
+            std::string szFileExtension;
 
-class DispatchFile : public ICommand {
-public:
-    void RunCommandSync(const SOCKET socket, std::string& szFileName) override
-    {
-        Commands::DoFileDispatch(socket, szFileName);
-    }
-};
+            ssHeader >> szCommand >> szKey >> szIv >> szFileName >> nFileSize >> szFileExtension;
+            Base64FileDataSecure fileData(szFileName, nFileSize, szFileExtension, szKey, szIv);
+
+            Commands::DoFileAcquireSecure(socket, fileData);
+
+            /*CommandManager().RunCommand(
+                szCommand,
+                [&socket, &fileData](CommandManager::CommandIteratorT itCommand) {
+                    itCommand->second->RunCommandSync(socket, fileData);
+                });*/
+        }
+    };
+
+    class FileDispatch : public ICommand {
+    public:
+        void Execute(std::istringstream& ssHeader, SOCKET socket) override {
+            std::string szCommand, szFileName;
+            ssHeader >> szCommand >> szFileName;
+
+            FileData fileData(szFileName, 0, "");
+
+            Commands::DoFileDispatch(socket, szFileName);
+
+
+            /*CommandManager().RunCommand(
+                szCommand,
+                [&socket, &szFileName](CommandManager::CommandIteratorT itCommand) {
+                    itCommand->second->RunCommandSync(socket, szFileName);
+                });*/
+        }
+    };
+}

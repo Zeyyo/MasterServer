@@ -43,7 +43,7 @@ namespace Utilities::SocketOperations
         else
             if (bForListening)
                 listen(socket, nBacklog);
-        
+
         return 0;
     }
 
@@ -96,7 +96,7 @@ namespace Utilities::SocketOperations
 
             end = clock();
             DWORD dReceiveTime = end - start;
-            if (nBytesReceived == -2 && dReceiveTime > 3000)
+            if (nBytesReceived == -2 && dReceiveTime > 30000)
             {
                 throw Exceptions::SocketOperationExceptions::SocketBufferEmptyException("");
             }
@@ -152,5 +152,68 @@ namespace Utilities::SocketOperations
                 offset += nBytesSent;
             }
         }
+    }
+
+    bool ReceiveFileFromPeer(SOCKET socket, char* prawBuffer, size_t nOfBytesToReceive, int flags)
+    {
+        try
+        {
+            Utilities::SocketOperations::Receive(
+                socket,
+                prawBuffer,
+                nOfBytesToReceive);
+        }
+        catch (Exceptions::SocketOperationExceptions::ReceiveTimeOutException& e)
+        {
+            std::string szErrorMessage = e.GetError();
+            Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFileFromPeer()." << Logger::endl;
+            return false;
+        }
+        catch (Exceptions::SocketOperationExceptions::SocketBufferEmptyException& e)
+        {
+            std::string szErrorMessage = e.GetError();
+            Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFileFromPeer()." << Logger::endl;
+            return false;
+        }
+    }
+
+    bool ReceiveHeaderFromPeer(
+        SOCKET socket,
+        char* prawBuffer,
+        size_t nOfBytesToReceive,
+        int flags)
+    {
+        try
+        {
+            Utilities::SocketOperations::Receive(
+                socket,
+                prawBuffer,
+                nOfBytesToReceive);
+        }
+        catch (Exceptions::NetworkOperationExceptions::FailedToReceiveHeaderPrefixException& e)
+        {
+            std::string szErrorMessage = e.GetError();
+            Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveHeaderFromPeer()." << Logger::endl;
+            return false;
+        }
+        catch (Exceptions::NetworkOperationExceptions::InvalidHeaderPrefixException& e)
+        {
+            std::string szErrorMessage = e.GetError();
+            Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveHeaderFromPeer()." << Logger::endl;
+            return false;
+        }
+        catch (Exceptions::SocketOperationExceptions::ReceiveTimeOutException& e)
+        {
+            std::string szErrorMessage = e.GetError();
+            Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveHeaderFromPeer()." << Logger::endl;
+            return false;
+        }
+        catch (Exceptions::SocketOperationExceptions::SocketBufferEmptyException& e)
+        {
+            std::string szErrorMessage = e.GetError();
+            Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveHeaderFromPeer()." << Logger::endl;
+            return false;
+        }
+        return true;
     }
 }

@@ -11,4 +11,5 @@ struct Header
 	{}
 	std::string headerData;
 	size_t headerSize;
+	Header() = default;
 };

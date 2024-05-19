@@ -5,5 +5,5 @@
 namespace Utilities::NameMangling
 {
 	using NetworkLibrary::TimeFormat;
-	std::string SuffixMangle(std::string szBody);
+	void SuffixMangle(std::string& szBody);
 }
