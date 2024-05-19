@@ -179,6 +179,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Events\Exceptions\CommandManagerExceptions.h" />
     <ClInclude Include="Source\Utilities\Crypto\HexEncDec.h" />
     <ClInclude Include="Source\Utilities\Crypto\Base64EncDec.h" />
     <ClInclude Include="Source\Utilities\Packing\Packing.h" />

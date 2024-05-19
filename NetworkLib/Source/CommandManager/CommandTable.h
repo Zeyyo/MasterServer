@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <unordered_map>
 #include "ICommand.h"
+#include "Events/Exceptions/CommandManagerExceptions.h"
 
 namespace CommandManager
 {
@@ -25,7 +26,6 @@ namespace CommandManager
             if (it != creators_.end()) {
                 return it->second();
             }
-            throw std::invalid_argument("Unknown command pattern");
         }
 
     private:

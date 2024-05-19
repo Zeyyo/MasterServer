@@ -60,41 +60,32 @@ namespace ProtocolHandlers::FTP
 		std::string szHeaderData = header.headerData;
 		std::istringstream ssHeader(szHeaderData);
 		SOCKET socket = sessionData_.socket;
+		std::unique_ptr<ICommand> command;
 
-		try {
-			std::unique_ptr<ICommand> command;
-
-			if (Utilities::CheckRequestFormat::IsValidRequestPattern(
-				Utilities::CheckRequestFormat::ftpPattern_SetupCall,
-				szHeaderData))
-			{
-				command = CommandManager::CommandTable::Instance().CommandLookup(SETUP_CALL);
-			}
-			else if (Utilities::CheckRequestFormat::IsValidRequestPattern(
-				Utilities::CheckRequestFormat::ftpPattern_FileAcquire,
-				szHeaderData))
-			{
-				command = CommandManager::CommandTable::Instance().CommandLookup(FILE_ACQUIRE);
-			}
-			else if (Utilities::CheckRequestFormat::IsValidRequestPattern(
-				Utilities::CheckRequestFormat::ftpPattern_FileDispatch,
-				szHeaderData))
-			{
-				command = CommandManager::CommandTable::Instance().CommandLookup(FILE_DISPATCH);
-			}
-			else
-			{
-				// TODO: Invalid header -> Close connection
-				return;
-			}
-
-			if (command) {
-				command->Execute(ssHeader, socket);
-			}
+		if (Utilities::CheckRequestFormat::IsValidRequestPattern(
+			Utilities::CheckRequestFormat::ftpPattern_SetupCall,
+			szHeaderData)) {
+			command = CommandManager::CommandTable::Instance().CommandLookup(SETUP_CALL);
 		}
-		catch (const std::invalid_argument& e) {
-			std::cerr << "Error: " << e.what() << std::endl;
-			// TODO: Handle invalid command pattern (e.g., close connection)
+		else if (Utilities::CheckRequestFormat::IsValidRequestPattern(
+			Utilities::CheckRequestFormat::ftpPattern_FileAcquire,
+			szHeaderData)) {
+			command = CommandManager::CommandTable::Instance().CommandLookup(FILE_ACQUIRE);
 		}
+		else if (Utilities::CheckRequestFormat::IsValidRequestPattern(
+			Utilities::CheckRequestFormat::ftpPattern_FileDispatch,
+			szHeaderData)) {
+			command = CommandManager::CommandTable::Instance().CommandLookup(FILE_DISPATCH);
+		}
+		else
+		{
+			Logger::LOG[Logger::Level::Critical] << "Invalid command pattern supplied" << Logger::endl;
+			return;
+		}
+
+		if (command) {
+			command->Execute(ssHeader, socket);
+		}
+
 	}
 }
