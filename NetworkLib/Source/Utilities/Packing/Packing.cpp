@@ -13,38 +13,42 @@
 
 namespace Utilities::Packing
 {
-	bool UnpackFile(
-		char* binary, 
-		size_t fileSize,
+	WORD UnpackFile(
+		char** binary, 
+		size_t& binarySize,
 		const char* pkBase64Buffer,
+		size_t pkBase64Len,
 		std::string szKey,
 		std::string szIv)
 	{
 		try
 		{
-			binary = Utilities::Crypto::Base64DecodeFileData(pkBase64Buffer, fileSize);
+			*binary = Utilities::Crypto::Base64DecodeFileData(pkBase64Buffer, pkBase64Len);
 		}
 		catch (Exceptions::CryptoOperationException::DataDecryptionException& e)
 		{
 			std::string szErrorMessage = e.GetError();
 			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at UnpackFile()." << Logger::endl;
-			return false;
+			return -1;
 		}
+		return 0;
 	}
 
-	bool UnpackFileSecure(
-		char*& binary,
-		size_t fileSize,
-		const char* pkBase64Buffer,
+	WORD UnpackFileSecure(
+		char** binary,
+		size_t& binarySize,
+		const char* pkPackedBuffer,
+		size_t pkPackedLen,
 		std::string szKey,
 		std::string szIv)
 	{
 		try
 		{
-			char* pDecodedBuffer = Utilities::Crypto::Base64DecodeFileData(pkBase64Buffer, fileSize);
-			binary = CryptoService::CryptoService().DSADecryptFileData(
+			char* pDecodedBuffer = Utilities::Crypto::Base64DecodeFileData(pkPackedBuffer, pkPackedLen);
+			*binary = CryptoService::CryptoService().AESDecryptFileData(
 				pDecodedBuffer,
-				fileSize,
+				pkPackedLen,
+				binarySize,
 				szKey,
 				szIv);
 		}
@@ -52,21 +56,21 @@ namespace Utilities::Packing
 		{
 			std::string szErrorMessage = e.GetError();
 			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at UnpackFile()." << Logger::endl;
-			return false;
+			return -1;
 		}
+		return 0;
 	}
 
-	bool UnpackHeader(const char* pkBase64Buffer, Header& header)
+	WORD UnpackHeader(const char* pkBase64Buffer, Header& header)
 	{
 		header.headerData = Utilities::Crypto::Base64Decode(pkBase64Buffer);
 		header.headerSize = header.headerData.length();
 
 		// TODO error handling
-		return 1;
-
+		return 0;
 	}
 
-	bool UnpackHeaderSecure(const char* pkBase64Buffer, Header& header)
+	WORD UnpackHeaderSecure(const char* pkBase64Buffer, Header& header)
 	{
 		std::string kszHeader;
 		try
@@ -79,10 +83,10 @@ namespace Utilities::Packing
 			std::string szErrorMessage = e.GetError();
 			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at RSADecryptHeaderData()." << Logger::endl;
 			// TODO failed to decrypt data -> Close connection
-			return 0;
+			return -1;
 		}
 		header.headerSize = header.headerData.length();
-		return 1;
+		return 0;
 	}
 
 }

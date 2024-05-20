@@ -3,21 +3,23 @@
 
 namespace Utilities::Packing
 {
-	bool UnpackFile(
-		char* binary,
-		size_t fileSize,
+	WORD UnpackFile(
+		char** binary,
+		size_t& binarySize,
 		const char* pkBase64Buffer,
+		size_t pkBase64Len,
 		std::string szKey,
 		std::string szIv);
 
-	bool UnpackFileSecure(
-		char*& binary,
-		size_t fileSize,
+	WORD UnpackFileSecure(
+		char** binary,
+		size_t& binarySize,
 		const char* pkBase64Buffer,
+		size_t pkBase64Len,
 		std::string szKey,
 		std::string szIv);
 
-	bool UnpackHeader(const char* pkBase64Buffer, Header& header);
-	bool UnpackHeaderSecure(const char* pkBase64Buffer, Header& heade);
+	WORD UnpackHeader(const char* pkBase64Buffer, Header& header);
+	WORD UnpackHeaderSecure(const char* pkBase64Buffer, Header& heade);
 
 }

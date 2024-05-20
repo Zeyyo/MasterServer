@@ -22,61 +22,58 @@ namespace FileTransferOperations
 {
 	bool ReceiveFileSecure(SOCKET socket, Base64FileDataSecure& kFileData)
 	{
-		kFileData.pPackagedFileBinary->binary = new char[kFileData.nFileSize];
-		Utilities::Memory::ZeroBufferMemory(kFileData.pPackagedFileBinary->binary, kFileData.nFileSize);
-		Utilities::NameMangling::SuffixMangle(kFileData.szFileName);
+		kFileData.pPackagedBinary->binary = new char[kFileData.pPackagedBinary->length];
+		Utilities::Memory::ZeroBufferMemory(kFileData.pPackagedBinary->binary, kFileData.pPackagedBinary->length);
+		Utilities::NameMangling::SuffixMangle(kFileData.szName);
 
-		bool success = Utilities::SocketOperations::ReceiveFileFromPeer(
+		WORD wRes = Utilities::SocketOperations::ReceiveFileFromPeer(
 			socket,
-			kFileData.pPackagedFileBinary->binary,
-			kFileData.nFileSize);
-		if (!success)
-			return false;
+			kFileData.pPackagedBinary->binary,
+			kFileData.pPackagedBinary->length);
+		if (wRes != 0) return false;
 		
-		success = Utilities::Packing::UnpackFileSecure(
-			kFileData.pFileBinary->binary,
-			kFileData.nFileSize,
-			kFileData.pPackagedFileBinary->binary,
+		wRes = Utilities::Packing::UnpackFileSecure(
+			&kFileData.pBinary->binary,
+			kFileData.pBinary->length,
+			kFileData.pPackagedBinary->binary,
+			kFileData.pPackagedBinary->length,
 			kFileData.szKey,
 			kFileData.szIv);
-		if (!success)
-			return false;
+		if (wRes != 0) return false;
 
-		success = Utilities::FileOperations::SaveFileSecure(
+		wRes = Utilities::FileOperations::SaveFileSecure(
 			kFileData, 
 			DEFAULT_RECEIVE_LOCATION);
-		if (!success)
-			return false;
+		if (wRes != 0) return false;
+
 		return true;
 	}
 
 	bool ReceiveFile(SOCKET socket, Base64FileData& kFileData)
 	{
-		kFileData.pPackagedFileBinary->binary = new char[kFileData.nFileSize];
-		Utilities::Memory::ZeroBufferMemory(kFileData.pPackagedFileBinary->binary, kFileData.nFileSize);
-		Utilities::NameMangling::SuffixMangle(kFileData.szFileName);
+		kFileData.pPackagedBinary->binary = new char[kFileData.pPackagedBinary->length];
+		Utilities::Memory::ZeroBufferMemory(kFileData.pPackagedBinary->binary, kFileData.pPackagedBinary->length);
+		Utilities::NameMangling::SuffixMangle(kFileData.szName);
 
-		bool success = Utilities::SocketOperations::ReceiveFileFromPeer(
+		WORD wRes = Utilities::SocketOperations::ReceiveFileFromPeer(
 			socket,
-			kFileData.pPackagedFileBinary->binary,
-			kFileData.nFileSize);
-		if (!success)
-			return false;
+			kFileData.pPackagedBinary->binary,
+			kFileData.pPackagedBinary->length);
+		if (wRes != 0) return false;
 
-		success = Utilities::Packing::UnpackFile(
-			kFileData.pFileBinary->binary,
-			kFileData.nFileSize,
-			kFileData.pPackagedFileBinary->binary,
+		wRes = Utilities::Packing::UnpackFile(
+			&kFileData.pBinary->binary,
+			kFileData.pBinary->length,
+			kFileData.pPackagedBinary->binary,
+			kFileData.pPackagedBinary->length,
 			kFileData.szKey,
 			kFileData.szIv);
-		if (!success)
-			return false;
+		if (wRes != 0) return false;
 
-		success = Utilities::FileOperations::SaveFile(
+		wRes = Utilities::FileOperations::SaveFile(
 			kFileData,
 			DEFAULT_RECEIVE_LOCATION);
-		if (!success)
-			return false;
+		if (wRes != 0) return false;
 
 		return true;
 	}

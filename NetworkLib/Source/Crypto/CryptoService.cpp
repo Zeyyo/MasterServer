@@ -39,6 +39,7 @@ namespace CryptoService
     using CryptoProvider::StreamTransformationFilter;
     using CryptoProvider::ArraySink;
     using CryptoProvider::byte;
+    using CryptoProvider::Redirector;
     
 
     const char* CryptoService::RSAEncryptHeader(const char* pksBuffer)
@@ -85,13 +86,13 @@ namespace CryptoService
         return recovered;
     }
 
-    const char* CryptoService::DSAEncryptData(const char* pksDataBuffer)
+    const char* CryptoService::AESEncryptData(const char* pksDataBuffer)
     {
         // TODO
         return "sdf";
     }
 
-    std::string CryptoService::DSADecryptData(const char* pksDataBuffer, std::string szKey, std::string szIv)
+    std::string CryptoService::AESDecryptData(const char* pksDataBuffer, std::string szKey, std::string szIv)
     {
         SecByteBlock key = Utilities::Crypto::StringToSecByteBlockDecode(szKey);
         SecByteBlock iv = Utilities::Crypto::StringToSecByteBlockDecode(szIv);
@@ -117,29 +118,34 @@ namespace CryptoService
         return recovered;
     }
 
-    char* CryptoService::DSADecryptFileData(const char* pkDataBuffer, size_t fileSize, std::string szKey, std::string szIv) 
+    char* CryptoService::AESDecryptFileData(const char* pkDataBuffer, size_t dataLen, size_t& recoveredDataLen, std::string szKey, std::string szIv)
     {
         SecByteBlock key = Utilities::Crypto::StringToSecByteBlockDecode(szKey);
         SecByteBlock iv = Utilities::Crypto::StringToSecByteBlockDecode(szIv);
 
-        char* recovered = new char[fileSize];
+        SecByteBlock decryptedData(dataLen);
 
-        try {
-            CBC_Mode<AES>::Decryption cbcDecryption;
-            cbcDecryption.SetKeyWithIV(key, key.size(), iv);
+        CBC_Mode<AES>::Decryption cbcDecryption;
+        cbcDecryption.SetKeyWithIV(key, key.size(), iv);
+        ArraySink arraySink(decryptedData, decryptedData.size());
+        StreamTransformationFilter decryptor(cbcDecryption, new Redirector(arraySink));
 
-            StreamTransformationFilter decryptor(cbcDecryption, new ArraySink((byte*)recovered, fileSize));
-            decryptor.Put((const byte*)pkDataBuffer, fileSize);
+        try
+        {
+            decryptor.Put((const byte*)(pkDataBuffer), dataLen);
             decryptor.MessageEnd();
         }
-        catch (const Exception& e) {
+        catch (const Exception& e)
+        {
             std::string message = e.what();
-            delete[] pkDataBuffer;
             throw Exceptions::CryptoOperationException::DataDecryptionException(message);
         }
 
-        delete[] pkDataBuffer;
-        return recovered;
+        recoveredDataLen = arraySink.TotalPutLength();
+        char* pBinary = new char[recoveredDataLen];
+        std::copy(decryptedData.begin(), decryptedData.begin() + recoveredDataLen, pBinary);
+
+        return pBinary;
     }
 
     bool CryptoService::operator==(const CryptoService& other) const

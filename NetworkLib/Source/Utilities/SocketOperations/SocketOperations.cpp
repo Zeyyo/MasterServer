@@ -126,7 +126,7 @@ namespace Utilities::SocketOperations
             if (dwError == WSAEWOULDBLOCK) NULL;
             throw Exceptions::SocketOperationExceptions::SendDataException(dwError);
         }
-        return 1;
+        return 0x1;
     }
 
     void Send(SOCKET socket, const char* pkrawBuffer, size_t nOfBytesToSend, int flags)
@@ -154,7 +154,7 @@ namespace Utilities::SocketOperations
         }
     }
 
-    bool ReceiveFileFromPeer(SOCKET socket, char* prawBuffer, size_t nOfBytesToReceive, int flags)
+    WORD ReceiveFileFromPeer(SOCKET socket, char* prawBuffer, size_t nOfBytesToReceive, int flags)
     {
         try
         {
@@ -167,17 +167,18 @@ namespace Utilities::SocketOperations
         {
             std::string szErrorMessage = e.GetError();
             Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFileFromPeer()." << Logger::endl;
-            return false;
+            return 0x1;
         }
         catch (Exceptions::SocketOperationExceptions::SocketBufferEmptyException& e)
         {
             std::string szErrorMessage = e.GetError();
             Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveFileFromPeer()." << Logger::endl;
-            return false;
+            return 0x1;
         }
+        return 0x0;
     }
 
-    bool ReceiveHeaderFromPeer(
+    WORD ReceiveHeaderFromPeer(
         SOCKET socket,
         char* prawBuffer,
         size_t nOfBytesToReceive,
@@ -194,26 +195,26 @@ namespace Utilities::SocketOperations
         {
             std::string szErrorMessage = e.GetError();
             Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveHeaderFromPeer()." << Logger::endl;
-            return false;
+            return 0x1;
         }
         catch (Exceptions::NetworkOperationExceptions::InvalidHeaderPrefixException& e)
         {
             std::string szErrorMessage = e.GetError();
             Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveHeaderFromPeer()." << Logger::endl;
-            return false;
+            return 0x1;
         }
         catch (Exceptions::SocketOperationExceptions::ReceiveTimeOutException& e)
         {
             std::string szErrorMessage = e.GetError();
             Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveHeaderFromPeer()." << Logger::endl;
-            return false;
+            return 0x1;
         }
         catch (Exceptions::SocketOperationExceptions::SocketBufferEmptyException& e)
         {
             std::string szErrorMessage = e.GetError();
             Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at ReceiveHeaderFromPeer()." << Logger::endl;
-            return false;
+            return 0x1;
         }
-        return true;
+        return 0x0;
     }
 }

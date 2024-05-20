@@ -28,13 +28,13 @@ namespace Utilities::SocketOperations
         size_t nOfBytesToSend, 
         int flags = 0);
 
-    bool ReceiveHeaderFromPeer(
+    WORD ReceiveHeaderFromPeer(
         SOCKET socket,
         char* prawBuffer,
         size_t nOfBytesToReceive,
         int flags = 0);
 
-    bool ReceiveFileFromPeer(
+    WORD ReceiveFileFromPeer(
         SOCKET socket,
         char* prawBuffer,
         size_t nOfBytesToReceive,

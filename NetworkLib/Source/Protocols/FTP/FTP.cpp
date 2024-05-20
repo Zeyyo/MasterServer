@@ -38,18 +38,18 @@ namespace ProtocolHandlers::FTP
 
 	Header FileTransferHandler::AcceptRequestHeader()
 	{
-		bool success = Utilities::SocketOperations::ReceiveHeaderFromPeer(sessionData_.socket,
+		WORD wRes = Utilities::SocketOperations::ReceiveHeaderFromPeer(sessionData_.socket,
 			sInitRequestHeaderBuffer_,
 			DEFAULT_HEADER_BASE64_HEADER_LEN);
-		if (!success)
+		if (wRes != 0)
 			// TODO close conn
 			std::cout << "\nfailed to get header\n";
 
 		printf("\nData: {%s}\n", sInitRequestHeaderBuffer_);
 
 		Header header;
-		success = Utilities::Packing::UnpackHeaderSecure(sInitRequestHeaderBuffer_, header);
-		if (!success)
+		wRes = Utilities::Packing::UnpackHeaderSecure(sInitRequestHeaderBuffer_, header);
+		if (wRes != 0)
 			// TODO close conn
 			std::cout << "\nfailed to unpack header\n";
 		return header;
@@ -83,9 +83,12 @@ namespace ProtocolHandlers::FTP
 			return;
 		}
 
-		if (command) {
-			command->Execute(ssHeader, socket);
+		if (command == nullptr) 
+		{ 
+			Logger::LOG[Logger::Level::Error] << "Command pattern mismatch" << Logger::endl; 
+			return; 
 		}
-
+		command->Execute(ssHeader, socket);
+		return;
 	}
 }

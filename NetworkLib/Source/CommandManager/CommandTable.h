@@ -26,6 +26,7 @@ namespace CommandManager
             if (it != creators_.end()) {
                 return it->second();
             }
+            return nullptr;
         }
 
     private:

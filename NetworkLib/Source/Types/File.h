@@ -36,52 +36,58 @@ struct Base64FileData
 {
 	Base64FileData() = default;
 	Base64FileData(
-		std::string szFileName,
-		size_t FileSize,
-		std::string szFileExtension,
+		std::string szName,
+		size_t nSize,
+		std::string szExtension,
 		std::string szKey,
 		std::string szIv)
 		:
-		szFileName(szFileName),
-		nFileSize(FileSize),
-		szFileExtension(szFileExtension),
+		szName(szName),
+		nSize_(nSize),
+		szExtension(szExtension),
 		szKey(szKey),
 		szIv(szIv)
-	{ }
-	std::string szFileName;
-	size_t nFileSize;
-	std::string szFileExtension;
+	{ 
+		pPackagedBinary->length = nSize_;
+	}
+	std::string szName;
+	std::string szExtension;
 
 	std::string szKey;
 	std::string szIv;
 
-	std::unique_ptr<PackagedFileBinary> pPackagedFileBinary = std::make_unique<PackagedFileBinary>();
-	std::unique_ptr<FileBinary> pFileBinary = std::make_unique<FileBinary>();
+	std::unique_ptr<PackagedFileBinary> pPackagedBinary = std::make_unique<PackagedFileBinary>();
+	std::unique_ptr<FileBinary> pBinary = std::make_unique<FileBinary>();
+private:
+	size_t nSize_;
 };
 
 struct Base64FileDataSecure
 {
 	Base64FileDataSecure() = default;
 	Base64FileDataSecure(
-		std::string szFileName, 
-		size_t FileSize, 
-		std::string szFileExtension,
+		std::string szName, 
+		size_t nSize, 
+		std::string szExtension,
 		std::string szKey,
 		std::string szIv) 
 		:
-		szFileName(szFileName),
-		nFileSize(FileSize),
-		szFileExtension(szFileExtension),
+		szName(szName),
+		nSize_(nSize),
+		szExtension(szExtension),
 		szKey(szKey),
 		szIv(szIv) 
-	{ }
-	std::string szFileName;
-	size_t nFileSize;
-	std::string szFileExtension;
+	{
+		pPackagedBinary->length = nSize_;
+	}
+	std::string szName;
+	std::string szExtension;
 
 	std::string szKey;
 	std::string szIv;
 
-	std::unique_ptr<PackagedFileBinary> pPackagedFileBinary = std::make_unique<PackagedFileBinary>();
-	std::unique_ptr<FileBinary> pFileBinary = std::make_unique<FileBinary>();
+	std::unique_ptr<PackagedFileBinary> pPackagedBinary = std::make_unique<PackagedFileBinary>();
+	std::unique_ptr<FileBinary> pBinary = std::make_unique<FileBinary>();
+private:
+	size_t nSize_;
 };
