@@ -100,7 +100,7 @@ namespace Utilities::FileOperations
 		{
 			Utilities::FileOperations::StoreFile(
 				kFileData.szName,
-				/*kFileData.szFileExtension*/ "jpg",
+				/*kFileData.szExtension*/ "jpg",
 				kFileData.pBinary->binary,
 				kFileData.pBinary->length,
 				location);
@@ -126,7 +126,7 @@ namespace Utilities::FileOperations
 		{
 			Utilities::FileOperations::StoreFile(
 				kFileData.szName,
-				/*kFileData.szFileExtension*/ "jpg",
+				kFileData.szExtension,
 				kFileData.pBinary->binary,
 				kFileData.pBinary->length,
 				location);

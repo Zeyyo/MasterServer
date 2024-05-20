@@ -30,6 +30,9 @@ void ftpMod(NetworkLibrary::SessionData& sessionData)
 
 namespace ProtocolHandlers::FTP
 {
+
+	
+
 	void FileTransferHandler::ProcessRequest()
 	{
 		Header header = AcceptRequestHeader();
@@ -60,7 +63,7 @@ namespace ProtocolHandlers::FTP
 		std::string szHeaderData = header.headerData;
 		std::istringstream ssHeader(szHeaderData);
 		SOCKET socket = sessionData_.socket;
-		std::unique_ptr<ICommand> command;
+		std::unique_ptr<CommandManager::ICommand> command;
 
 		if (Utilities::CheckRequestFormat::IsValidRequestPattern(
 			Utilities::CheckRequestFormat::ftpPattern_SetupCall,

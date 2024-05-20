@@ -1,6 +1,10 @@
 #pragma once
 #include "CommandAssociateFunctions/CommandAssociateFunctions.h"
 #include "ICommand.h"
+#include "ExtensionManager/ExtensionTable.h"
+#include "Events/Exceptions/ExtensionManagerExceptions.h"
+#include "Events/Logger/OstreamLogger.h"
+
 
 namespace CommandManager::Commands
 {
@@ -16,13 +20,23 @@ namespace CommandManager::Commands
     public:
         void Execute(std::istringstream& ssHeader, SOCKET socket) override
         {
-            std::string szCommand, szKey, szIv, szFileName;
-            size_t nFileSize;
-            std::string szFileExtension;
+            std::string szCommand, szKey, szIv, szName, szExt;
+            std::string szExtensionKey;
+            size_t nSize;
 
-            ssHeader >> szCommand >> szKey >> szIv >> szFileName >> nFileSize >> szFileExtension;
-            Base64FileDataSecure fileData(szFileName, nFileSize, szFileExtension, szKey, szIv);
+            ssHeader >> szCommand >> szKey >> szIv >> szName >> nSize >> szExtensionKey;
+            try
+            {
+                szExt = ExtensionManager::GetExtension(szExtensionKey);
+            }
+            catch (const Exceptions::ExtensionManagerExceptions::ExtensionKeyMismatch& e)
+            {
+                std::string szErrorMessage = e.GetError();
+                Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at FileAcquire - > GetExtension()." << Logger::endl;
+                return;
+            }
 
+            Base64FileDataSecure fileData(szName, nSize, szExt, szKey, szIv);
             Commands::DoFileAcquireSecure(socket, fileData);
         }
     };

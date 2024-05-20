@@ -165,6 +165,12 @@
     <ClInclude Include="Source\Events\Exceptions\CommandManagerExceptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ExtensionManager\ExtensionTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Events\Exceptions\ExtensionManagerExceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\NEtw_pch.cpp">
@@ -264,6 +270,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\CommandManager\CommandTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ExtensionManager\ExtensionTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
