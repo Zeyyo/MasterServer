@@ -14,6 +14,10 @@ namespace Utilities::Crypto
     using CryptoPP::StringSink;
     using CryptoPP::ArraySink;
     using CryptoPP::byte;
+    using CryptoPP::Redirector;
+    using CryptoPP::SecByteBlock;
+    using CryptoPP::Exception;
+    
 
     std::string Base64Encode(std::string szBuffer)
     {
@@ -47,16 +51,32 @@ namespace Utilities::Crypto
         return szDecodedBuffer;
     }
 
-    char* Base64DecodeFileData(const char* pkBase64Buffer, size_t& len)
+    char* Base64DecodeFileData(const char* pkBuffer, size_t& inputLen)
     {
-        size_t dataLen = len;
-        len = Utilities::Crypto::B64DecodedSize(len);
-        char* pDecodedBuffer = new char[len];
-        Utilities::Memory::ZeroBufferMemory(pDecodedBuffer, len);
+        SecByteBlock decodedData;
+        try
+        {
+            Base64Decoder decoder;
+            decoder.Put((const byte*)(pkBuffer), inputLen);
+            decoder.MessageEnd();
 
-        Base64Decoder decoder(new ArraySink((byte*)pDecodedBuffer, len));
-        decoder.Put((const byte*)pkBase64Buffer, dataLen);
-        decoder.MessageEnd();
+            size_t decodedLen = decoder.MaxRetrievable();
+            decodedData.resize(decodedLen);
+
+            ArraySink arraySink(decodedData, decodedData.size());
+            decoder.Attach(new Redirector(arraySink));
+            decoder.Put((const byte*)(pkBuffer), inputLen);
+            decoder.MessageEnd();
+        }
+        catch (const Exception& e)
+        {
+            std::string message = e.what();
+            throw std::runtime_error("Base64 decoding error: " + message);
+        }
+        inputLen = decodedData.size();
+        char* pDecodedBuffer = new char[inputLen];
+        std::copy(decodedData.begin(), decodedData.begin() + inputLen, pDecodedBuffer);
+
         return pDecodedBuffer;
     }
 
