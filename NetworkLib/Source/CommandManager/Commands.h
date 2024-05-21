@@ -18,7 +18,7 @@ namespace CommandManager::Commands
 
     class FileAcquire : public ICommand {
     public:
-        void Execute(std::istringstream& ssHeader, SOCKET socket) override
+        void Execute(std::istringstream& ssHeader, SOCKET socket, std::string& id) override
         {
             std::string szCommand, szKey, szIv, szName, szExt;
             std::string szExtensionKey;
@@ -37,7 +37,7 @@ namespace CommandManager::Commands
             }
 
             Base64FileDataSecure fileData(szName, nSize, szExt, szKey, szIv);
-            Commands::DoFileAcquireSecure(socket, fileData);
+            Commands::DoFileAcquireSecure(socket, fileData, id);
         }
     };
 

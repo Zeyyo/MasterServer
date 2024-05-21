@@ -13,7 +13,7 @@ namespace Utilities::SocketOperations
 
     SOCKET Accept(
         SOCKET listenSocket,
-        sockaddr pAddr, 
+        sockaddr& pAddr, 
         int addrSize);
 
     void Receive(

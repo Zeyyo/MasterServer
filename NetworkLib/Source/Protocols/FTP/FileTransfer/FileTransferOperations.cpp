@@ -49,6 +49,36 @@ namespace FileTransferOperations
 		return true;
 	}
 
+	bool ReceiveFileSecure(SOCKET socket, Base64FileDataSecure& kFileData, std::string& id)
+	{
+		kFileData.pPackagedBinary->binary = new char[kFileData.pPackagedBinary->length];
+		Utilities::Memory::ZeroBufferMemory(kFileData.pPackagedBinary->binary, kFileData.pPackagedBinary->length);
+		Utilities::NameMangling::SuffixMangle(kFileData.szName);
+
+		WORD wRes = Utilities::SocketOperations::ReceiveFileFromPeer(
+			socket,
+			kFileData.pPackagedBinary->binary,
+			kFileData.pPackagedBinary->length);
+		if (wRes != 0) return false;
+
+		wRes = Utilities::Packing::UnpackFileSecure(
+			&kFileData.pBinary->binary,
+			kFileData.pBinary->length,
+			kFileData.pPackagedBinary->binary,
+			kFileData.pPackagedBinary->length,
+			kFileData.szKey,
+			kFileData.szIv);
+		if (wRes != 0) return false;
+
+		wRes = Utilities::FileOperations::SaveFileSecure(
+			kFileData,
+			DEFAULT_RECEIVE_LOCATION,
+			id);
+		if (wRes != 0) return false;
+
+		return true;
+	}
+
 	bool ReceiveFile(SOCKET socket, Base64FileData& kFileData)
 	{
 		kFileData.pPackagedBinary->binary = new char[kFileData.pPackagedBinary->length];

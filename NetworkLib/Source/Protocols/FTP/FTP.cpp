@@ -9,6 +9,7 @@
 #include "Events/Exceptions/CryptoOperationException.h"
 #include "Events/Exceptions/SocketOperationExceptions.h"
 #include "Events/Exceptions/NetworkOperationExceptions.h"
+#include "Events/Exceptions/ConnectionManagerExceptions.h"
 
 #include "Server/SessionHandling/Session/Session.h"
 
@@ -22,43 +23,67 @@
 
 void ftpMod(NetworkLibrary::SessionData& sessionData)
 {
-	std::cerr << " FTP MOD\n";
-
 	ProtocolHandlers::FTP::FileTransferHandler fileTransferHandler(sessionData);
 	fileTransferHandler.ProcessRequest();
 }
 
 namespace ProtocolHandlers::FTP
 {
-
-	
-
 	void FileTransferHandler::ProcessRequest()
 	{
-		Header header = AcceptRequestHeader();
-		ExecuteRequestedCommand(header);
+		Header header;
+		try
+		{
+			header = AcceptHeader();
+		}
+		catch (const Exceptions::NetworkOperationExceptions::FailedReceivingHeaderException& e)
+		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Critical] << szErrorMessage << Logger::endl;
+			return;
+		}
+		catch (const Exceptions::NetworkOperationExceptions::FailedUnpackingHeaderException& e)
+		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Critical] << szErrorMessage << Logger::endl;
+			return;
+		}
+		
+		try
+		{
+			ExecuteCommand(header);
+		}
+		catch (const Exceptions::CommandManagerExceptions::InvalidCommandPattern& e)
+		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Critical] << szErrorMessage << Logger::endl;
+			return;
+		}
+		catch (const Exceptions::CommandManagerExceptions::CommandKeyMismatch& e)
+		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Critical] << szErrorMessage << Logger::endl;
+			return;
+		}
 	}
 
-	Header FileTransferHandler::AcceptRequestHeader()
+	Header FileTransferHandler::AcceptHeader()
 	{
+		Header header;
 		WORD wRes = Utilities::SocketOperations::ReceiveHeaderFromPeer(sessionData_.socket,
 			sInitRequestHeaderBuffer_,
 			DEFAULT_HEADER_BASE64_HEADER_LEN);
 		if (wRes != 0)
-			// TODO close conn
-			std::cout << "\nfailed to get header\n";
+			throw Exceptions::NetworkOperationExceptions::FailedReceivingHeaderException("Exception thrown at ReceiveHeaderFromPeer()");
 
-		printf("\nData: {%s}\n", sInitRequestHeaderBuffer_);
-
-		Header header;
 		wRes = Utilities::Packing::UnpackHeaderSecure(sInitRequestHeaderBuffer_, header);
 		if (wRes != 0)
-			// TODO close conn
-			std::cout << "\nfailed to unpack header\n";
+			throw Exceptions::NetworkOperationExceptions::FailedUnpackingHeaderException("Exception thrown at UnpackHeaderSecure()");
+
 		return header;
 	}
 
-	void FileTransferHandler::ExecuteRequestedCommand(Header header)
+	void FileTransferHandler::ExecuteCommand(Header header)
 	{
 		std::string szHeaderData = header.headerData;
 		std::istringstream ssHeader(szHeaderData);
@@ -82,16 +107,16 @@ namespace ProtocolHandlers::FTP
 		}
 		else
 		{
-			Logger::LOG[Logger::Level::Critical] << "Invalid command pattern supplied" << Logger::endl;
+			throw Exceptions::CommandManagerExceptions::InvalidCommandPattern("Exception thrown at ExecuteCommand()");
 			return;
 		}
 
 		if (command == nullptr) 
-		{ 
-			Logger::LOG[Logger::Level::Error] << "Command pattern mismatch" << Logger::endl; 
+		{
+			throw Exceptions::CommandManagerExceptions::CommandKeyMismatch("Exception thrown at CommandLookup()");
 			return; 
 		}
-		command->Execute(ssHeader, socket);
+		command->Execute(ssHeader, socket, sessionData_.szIpAdress);
 		return;
 	}
 }

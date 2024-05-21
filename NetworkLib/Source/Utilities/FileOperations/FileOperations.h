@@ -20,4 +20,9 @@ namespace Utilities::FileOperations
 	bool SaveFileSecure(
 		Base64FileDataSecure& kFileData,
 		std::string location);
+
+	bool SaveFileSecure(
+		Base64FileDataSecure& kFileData,
+		std::string location,
+		std::string& id);
 }

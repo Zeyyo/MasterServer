@@ -20,7 +20,20 @@ namespace Utilities::NameMangling
             oss << std::put_time(&tm, "%H-%M-%S");
         if (Filters::timeFormatFilter == TimeFormat::DATE_TIME)
             oss << std::put_time(&tm, "%d-%m-%Y_%H-%M-%S");
-        auto suffix = oss.str();
+        std::string suffix = oss.str();
+
+        return suffix;
+    }
+
+    std::string GetPeerPlaceholderSuffix()
+    {
+        time_t time = std::time(nullptr);
+        tm tm;
+        localtime_s(&tm, &time);
+        std::ostringstream oss;
+
+        oss << std::put_time(&tm, "%d-%m-%Y_%H-%M-%S");
+        std::string suffix = oss.str();
 
         return suffix;
     }
@@ -31,4 +44,11 @@ namespace Utilities::NameMangling
         std::string szResult = szBody + "-" + suffix;
         szBody = szResult;
 	}
+
+    void PeerPlaceholderSuffixMangle(std::string& szBody)
+    {
+        std::string suffix = GetPeerPlaceholderSuffix();
+        std::string szResult = szBody + "-" + suffix;
+        szBody = szResult;
+    }
 }

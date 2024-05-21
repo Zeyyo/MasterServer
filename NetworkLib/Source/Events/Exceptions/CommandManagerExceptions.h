@@ -18,4 +18,19 @@ namespace Exceptions::CommandManagerExceptions
             return szErrorMessage;
         }
     };
+
+    class CommandKeyMismatch : public std::exception {
+    private:
+        std::string szErrorMessage;
+    public:
+        CommandKeyMismatch(const std::string& message) : szErrorMessage("No command suits supplied key: " + message) {}
+
+        const char* what() const noexcept override {
+            return szErrorMessage.c_str();
+        }
+        std::string GetError() const
+        {
+            return szErrorMessage;
+        }
+    };
 }

@@ -7,6 +7,7 @@
 namespace CommandManager::Commands
 {
 	void DoFileAcquireSecure(const SOCKET socket, Base64FileDataSecure& fileData);
+	void DoFileAcquireSecure(const SOCKET socket, Base64FileDataSecure& fileData, std::string& id);
 	void DoFileAcquire(const SOCKET socket, Base64FileData& fileData);
 	void DoFileDispatch(const SOCKET socket, std::string& szFileName);
 }

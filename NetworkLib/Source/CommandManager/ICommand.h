@@ -7,6 +7,7 @@ namespace CommandManager
     class ICommand {
     public:
         virtual ~ICommand() = default;
-        virtual void Execute(std::istringstream& ssHeader, SOCKET socket) = 0;
+        virtual void Execute(std::istringstream& ssHeader, SOCKET socket) {};
+        virtual void Execute(std::istringstream& ssHeader, SOCKET socket, std::string& id) {};
     };
 }

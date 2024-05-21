@@ -47,7 +47,7 @@ namespace Utilities::SocketOperations
         return 0;
     }
 
-    SOCKET Accept(SOCKET listenSocket, sockaddr pAddr, int addrSize)
+    SOCKET Accept(SOCKET listenSocket, sockaddr& pAddr, int addrSize)
     {
         SOCKET clientSocket = NULL;
         for (;;)

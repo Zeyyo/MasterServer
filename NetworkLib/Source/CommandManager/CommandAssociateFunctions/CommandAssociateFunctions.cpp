@@ -8,6 +8,11 @@ namespace CommandManager::Commands
 		bool bFileAcquireSuccess = FileTransferOperations::ReceiveFileSecure(socket, fileData);
 	}
 
+	void DoFileAcquireSecure(const SOCKET socket, Base64FileDataSecure& fileData, std::string& id)
+	{
+		bool bFileAcquireSuccess = FileTransferOperations::ReceiveFileSecure(socket, fileData, id);
+	}
+
 	void DoFileAcquire(const SOCKET socket, Base64FileData& fileData)
 	{
 		bool bFileAcquireSuccess = FileTransferOperations::ReceiveFile(socket, fileData);

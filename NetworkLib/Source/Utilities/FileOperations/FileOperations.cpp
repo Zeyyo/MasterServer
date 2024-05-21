@@ -16,6 +16,11 @@
 
 namespace Utilities::FileOperations
 {
+	void CreatePeerDirecory(std::string& szPath)
+	{
+		std::filesystem::create_directory(szPath);
+	}
+
 	void CreateFileForWriting(std::ofstream& outFile, const std::string& kszFilePath)
 	{
 		outFile.open(kszFilePath, std::ios::binary | std::ios::out);
@@ -50,9 +55,7 @@ namespace Utilities::FileOperations
 				{ CreateFileForWriting(outFile, szFilePath); } ,
 				[](Exceptions::FileOperationExceptions::FileCreateException) {});
 		if (bSuccess == false)
-			throw Exceptions::FileOperationExceptions::FileCreateTimeOutException("");
-
-		// outFile << pkrawFileDataBuffer;
+			throw Exceptions::FileOperationExceptions::FileCreateTimeOutException("Exception thrown at StoreFile()");
 
 		outFile.write(pkrawDataBuffer, length);
 
@@ -79,7 +82,7 @@ namespace Utilities::FileOperations
 				[](Exceptions::FileOperationExceptions::FileLoadException) {});
 
 		if (bSuccess == false)
-			throw Exceptions::FileOperationExceptions::FileLoadTimeoutException("");
+			throw Exceptions::FileOperationExceptions::FileLoadTimeoutException("Exception thrown at LoadFile()");
 
 		inFile.seekg(0, std::ios::end);
 		const size_t knFileSize = inFile.tellg();
@@ -108,14 +111,14 @@ namespace Utilities::FileOperations
 		catch (Exceptions::FileOperationExceptions::FileAlreadyExistsException& e)
 		{
 			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at SaveFile()." << Logger::endl;
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << Logger::endl;
 			return false;
 		}
 		catch (Exceptions::FileOperationExceptions::FileCreateTimeOutException& e)
 		{
 			// TODO temporary cache the data
 			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at SaveFile()." << Logger::endl;
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << Logger::endl;
 			return false;
 		}
 	}
@@ -134,16 +137,48 @@ namespace Utilities::FileOperations
 		catch (Exceptions::FileOperationExceptions::FileAlreadyExistsException& e)
 		{
 			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at SaveFileSecure()." << Logger::endl;
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << Logger::endl;
 			return false;
 		}
 		catch (Exceptions::FileOperationExceptions::FileCreateTimeOutException& e)
 		{
 			// TODO temporary cache the data
 			std::string szErrorMessage = e.GetError();
-			Logger::LOG[Logger::Level::Error] << szErrorMessage << " Exception thrown at SaveFileSecure()." << Logger::endl;
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << Logger::endl;
 			return false;
 		}
 	}
 
+	bool SaveFileSecure(Base64FileDataSecure& kFileData, std::string location, std::string& id)
+	{
+		std::ostringstream ssPath;
+		ssPath << location << "/" << id;
+		std::string szPath = ssPath.str();
+
+		if (!std::filesystem::exists(szPath))
+			CreatePeerDirecory(szPath);
+
+		try
+		{
+			Utilities::FileOperations::StoreFile(
+				kFileData.szName,
+				kFileData.szExtension,
+				kFileData.pBinary->binary,
+				kFileData.pBinary->length,
+				szPath);
+		}
+		catch (Exceptions::FileOperationExceptions::FileAlreadyExistsException& e)
+		{
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << Logger::endl;
+			return false;
+		}
+		catch (Exceptions::FileOperationExceptions::FileCreateTimeOutException& e)
+		{
+			// TODO temporary cache the data
+			std::string szErrorMessage = e.GetError();
+			Logger::LOG[Logger::Level::Error] << szErrorMessage << Logger::endl;
+			return false;
+		}
+	}
 }

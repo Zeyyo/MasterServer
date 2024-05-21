@@ -4,13 +4,43 @@ namespace Logger
 {
 	enum class Level
 	{
-		Nothing		= -1,
-		Debug		= 0,
-		Info		= 1,
-		Warning		= 2,
-		Error		= 3,
-		Critical	= 4,
-		Fatal		= 5
+        /// <summary>
+        /// Shall represent no logging
+        /// </summary>
+        Nothing = -1,
+
+        /// <summary>
+        /// Shall represent detailed debug information
+        /// </summary>
+        Debug = 0,
+
+        /// <summary>
+        /// Shall represent general informational messages
+        /// </summary>
+        Info = 1,
+
+        /// <summary>
+        /// Shall represent warnings indicating a potential issue
+        /// </summary>
+        Warning = 2,
+
+        /// <summary>
+        /// Shall represent an error that is not considered critical 
+        /// and will not result in data loss
+        /// </summary>
+        Error = 3,
+
+        /// <summary>
+        /// Shall represent an issue, which will result in closing 
+        /// the connection
+        /// </summary>
+        Critical = 4,
+
+        /// <summary>
+        /// Shall represent an issue, which will result in shutting 
+        /// down the server
+        /// </summary>
+        Fatal = 5
 	};
 
 	struct EndlT {};

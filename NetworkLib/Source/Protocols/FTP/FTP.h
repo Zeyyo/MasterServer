@@ -25,8 +25,8 @@ namespace ProtocolHandlers::FTP
 			ExtensionManager::RegisterExtensions();
 		}
 		void ProcessRequest();
-		Header AcceptRequestHeader();
-		void ExecuteRequestedCommand(Header);
+		Header AcceptHeader();
+		void ExecuteCommand(Header);
 
 		//void DoSetupCallHandleing();
 		//void DoFileRequestHandleing();
